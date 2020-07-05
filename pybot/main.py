@@ -17,7 +17,7 @@ def build_object(yaml_dic, typ):
 
 
 def main(config_file):
-    yaml_dic = yaml.load(open(config_file))
+    yaml_dic = yaml.safe_load(open(config_file))
 
     service = build_object(yaml_dic, typ="service")
     app = build_object(yaml_dic, typ="app")

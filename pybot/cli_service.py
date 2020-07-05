@@ -30,8 +30,8 @@ class CliService:
         self._out_fd = sys.stdout
 
     def get_stream(self):
-        for line in self._in_fd:
-            text = line.strip("\n")
+        while True:
+            text = input(f"{self._config.user_name}> ")
             yield CliMessage(text=text, service=self)
 
     def post(self, text):
@@ -39,7 +39,7 @@ class CliService:
 
     def respond(self, message, text):
         user_name = self._config.user_name
-        fmt = f"@{user_name} {text}"
+        fmt = f"bot> {text}"
         print(fmt, file=self._out_fd)
 
 
