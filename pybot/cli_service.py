@@ -38,7 +38,6 @@ class CliService:
         print(text, file=self._out_fd)
 
     def respond(self, message, text):
-        user_name = self._config.user_name
         fmt = f"bot> {text}"
         print(fmt, file=self._out_fd)
 
