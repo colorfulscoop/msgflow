@@ -1,13 +1,11 @@
 import yaml
-from controller import Controller
+from pybot.controller import Controller
 
 
 def load_module(name):
     components = name.split('.')
-    mod = __import__(components[0])
-    for comp in components[1:]:
-        mod = getattr(mod, comp)
-    return mod
+    mod = __import__(".".join(components[:-1]), fromlist=[components[-1]])
+    return getattr(mod, components[-1])
 
 
 def build_object(yaml_dic, typ):

@@ -1,5 +1,5 @@
 service:
-  name: cli_service.CliService
+  name: pybot.cli_service.CliService
   config:
     user_name: you
 
