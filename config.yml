@@ -1,0 +1,7 @@
+service:
+  name: cli_service.CliService
+  config:
+    user_name: you
+
+app:
+  name: app.MyApp
