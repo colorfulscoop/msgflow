@@ -2,7 +2,7 @@ import yaml
 from controller import Controller
 
 
-def my_import(name):
+def load_module(name):
     components = name.split('.')
     mod = __import__(components[0])
     for comp in components[1:]:
@@ -14,7 +14,7 @@ def build_object(yaml_dic, typ):
     service_dict = yaml_dic[typ]
     cls_name = service_dict["name"]
     config = service_dict.get("config", dict())
-    service = my_import(cls_name)(config)
+    service = load_module(cls_name)(config)
     return service
 
 

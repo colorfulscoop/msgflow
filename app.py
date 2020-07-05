@@ -3,5 +3,5 @@ class MyApp:
         """"""
 
     def handle(self, message):
-        res = f"{message.text} => Hi, how are you?"
+        res = f'As you say "{message.text}", how are you?'
         message.respond(res)
