@@ -1,6 +1,4 @@
-#
-# [Service]
-#
+# ===== [Service] =====
 
 # CLI Service
 service:
@@ -10,19 +8,16 @@ service:
 
 # Twitter service
 #service:
-#  name: pybot.twitter_service.twitter_service
+#  name: pybot.twitter_service.TwitterStreamSampleService
 #  config:
 #    consumer_key: ""
 #    consumer_secret: ""
-#    access_token: ""
+#    access_token_key: ""
 #    access_token_secret: ""
-#    type: HomeTimeline
-#    responce: False
-#    interval: 60
+#    lang: ja
 
-#
-# [Post Service]
-#
+
+# ===== [Post Service] =====
 # If you want to use different service to post your message,
 # define post service.
 
@@ -31,9 +26,9 @@ service:
 #  config:
 #    user_name: you
 
-#
-# [App]
-#
+
+# ===== [App] =====
+# Define your app here
 
 app:
   name: app.MyApp
