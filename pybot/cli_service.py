@@ -13,7 +13,8 @@ class CliMessage:
         return self._text
 
     def respond(self, text):
-        return self._service.respond(self, text)
+        fmt = f"bot> {text}"
+        print(fmt)
 
 
 class CliService:
@@ -36,10 +37,6 @@ class CliService:
 
     def post(self, text):
         print(text, file=self._out_fd)
-
-    def respond(self, message, text):
-        fmt = f"bot> {text}"
-        print(fmt, file=self._out_fd)
 
 
 class CliConfig(BaseModel):
