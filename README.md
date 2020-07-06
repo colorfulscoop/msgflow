@@ -23,7 +23,7 @@ you>
 
 ## Services
 
-| Name | Description | Stream | Post |
-| --- | --- | --- | --- |
-| pybot.service.CliService | CLI service to work with stdin and stdout | :white_check_mark: Stdin | :white_check_mark: Stdout |
-| pybot.service.TwitterSampleStreamService | [Twitter sample stream](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/get_statuses_sample) service to get messages from stream sample | :white_check_mark: Twitter sample stream | :x: Not implemented |
+| Name | Description | Stream | Post | Respond to message |
+| --- | --- | --- | --- | --- |
+| pybot.service.CliService | CLI service to work with stdin and stdout | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| pybot.service.TwitterSampleStreamService | [Twitter sample stream](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/get_statuses_sample) service to get messages from stream sample | :white_check_mark: | :x: | :x: |
