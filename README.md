@@ -20,3 +20,10 @@ bot> This is a response to "Hi"
 This is a post to "Hi"
 you>
 ```
+
+## Services
+
+| Name | Description | Stream | Post |
+| --- | --- | --- | --- |
+| pybot.cli_service.CliService | CLI service to work with stdin and stdout | stdin | stdout |
+| pybot.twitter_service.TwitterStreamSampleService | Twitter Stream Sample service to get messages from stream sample | Twitter Stream Sample | Not implemented |
