@@ -25,5 +25,5 @@ you>
 
 | Name | Description | Stream | Post |
 | --- | --- | --- | --- |
-| pybot.cli_service.CliService | CLI service to work with stdin and stdout | stdin | stdout |
-| pybot.twitter_service.TwitterStreamSampleService | Twitter Stream Sample service to get messages from stream sample | Twitter Stream Sample | Not implemented |
+| pybot.service.CliService | CLI service to work with stdin and stdout | stdin | stdout |
+| pybot.service.TwitterStreamSampleService | Twitter Stream Sample service to get messages from stream sample | Twitter Stream Sample | Not implemented |

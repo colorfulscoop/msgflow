@@ -2,13 +2,13 @@
 
 # CLI Service
 service:
-  name: pybot.cli_service.CliService
+  name: pybot.service.CliService
   config:
     user_name: you
 
 # Twitter service
 #service:
-#  name: pybot.twitter_service.TwitterStreamSampleService
+#  name: pybot.service.TwitterStreamSampleService
 #  config:
 #    consumer_key: ""
 #    consumer_secret: ""
@@ -22,7 +22,7 @@ service:
 # define post service.
 
 #post_service:
-#  name: pybot.cli_service.CliService
+#  name: pybot.service.CliService
 #  config:
 #    user_name: you
 
