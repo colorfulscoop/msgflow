@@ -2,6 +2,33 @@
 
 PyBot is a chatbot framework to work with several services (Slack, Twitter, CLI).
 
+## Architecture
+
+Basic architecture to communicate with a service.
+
+```
+           get message
+         <--------------
+    App                    Service
+         -------------->
+         * respond to message
+         * post
+```
+
+Use different service depending on respond and post
+
+```
+            get message
+          <--------------
+    App                    Service
+     |    -------------->
+     |    respond to message
+     |
+     |------------------>  Service
+              post
+```
+
+
 ## Installation
 
 ```sh
