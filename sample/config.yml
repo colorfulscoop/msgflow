@@ -16,6 +16,14 @@ service:
 #    access_token_secret: ""
 #    lang: ja
 
+# Slack service
+#service:
+#  name: pybot.service.SlackService
+#  config:
+#    slack_api_token: ""
+#    channel: ""
+#    bot_id: ""
+
 
 # ===== [Post Service] =====
 # If you want to use different service to post your message,
