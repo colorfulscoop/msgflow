@@ -8,7 +8,7 @@ service:
 
 # Twitter service
 #service:
-#  name: pybot.service.TwitterStreamSampleService
+#  name: pybot.service.TwitterSampleStreamService
 #  config:
 #    consumer_key: ""
 #    consumer_secret: ""

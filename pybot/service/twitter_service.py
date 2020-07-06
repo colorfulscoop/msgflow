@@ -15,7 +15,7 @@ class TwitterMessage:
         raise NotImplementedError()
 
 
-class TwitterStreamSampleService:
+class TwitterSampleStreamService:
     def __init__(self, config, api_cls=twitter.Api):
         """
         Args:
