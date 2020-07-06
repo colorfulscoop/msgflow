@@ -3,10 +3,9 @@ from pydantic import BaseModel
 
 
 class CliMessage:
-    def __init__(self, text, service):
+    def __init__(self, text):
         """"""
         self._text = text
-        self._service = service
 
     @property
     def text(self):
@@ -33,7 +32,7 @@ class CliService:
     def get_stream(self):
         while True:
             text = input(f"{self._config.user_name}> ")
-            yield CliMessage(text=text, service=self)
+            yield CliMessage(text=text)
 
     def post(self, text):
         print(text, file=self._out_fd)
