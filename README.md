@@ -28,7 +28,6 @@ Use different service depending on respond and post
               post
 ```
 
-
 ## Installation
 
 ```sh
@@ -37,10 +36,21 @@ $ pip install git+https://github.com/noriyukipy/pybot
 
 ## Usage
 
-Change directory to `sample` and run `pybot.main`.
+Create working directory, and run `init` command to generate config and app templates.
 
 ```sh
-$ python -m pybot.main --config_file=config.yml
+$ mkdir work
+$ cd work
+$ python -m pybot.main init
+$ ls -1
+app.py
+config.yml
+```
+
+Then execute `run` command to talk with PyBot.
+
+```sh
+$ python -m pybot.main run --config_file=config.yml
 INFO:root:"post_service" is not defined in config file. "service" is used for "post_service" instead.
 you> Hi
 bot> This is a response to "Hi"

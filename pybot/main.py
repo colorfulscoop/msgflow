@@ -1,5 +1,8 @@
 import yaml
 import logging
+import os
+from pybot.content import INIT_CONFIG
+from pybot.content import INIT_APP
 from pybot.controller import Controller
 
 
@@ -41,20 +44,29 @@ def build_app(yaml_dic, post_service):
     return service
 
 
-def main(config_file):
-    # Set logging
-    logging.basicConfig(level=logging.INFO)
+class Main:
+    def init(self, dir=".", config_file="config.yml", app_file="app.py"):
+        config_path = os.path.join(dir, config_file)
+        app_path = os.path.join(dir, app_file)
+        with open(config_path, "w") as fd:
+            fd.write(INIT_CONFIG)
+        with open(app_path, "w") as fd:
+            fd.write(INIT_APP)
 
-    yaml_dic = yaml.safe_load(open(config_file))
-    service = build_service(yaml_dic)
-    post_service = build_post_service(yaml_dic, service=service)
-    app = build_app(yaml_dic=yaml_dic, post_service=post_service)
-    controller = Controller(service, app)
+    def run(self, config_file):
+        # Set logging
+        logging.basicConfig(level=logging.INFO)
 
-    controller.start_handle()
+        yaml_dic = yaml.safe_load(open(config_file))
+        service = build_service(yaml_dic)
+        post_service = build_post_service(yaml_dic, service=service)
+        app = build_app(yaml_dic=yaml_dic, post_service=post_service)
+        controller = Controller(service, app)
+
+        controller.start_handle()
 
 
 if __name__ == "__main__":
     import fire
 
-    fire.Fire(main)
+    fire.Fire(Main)
