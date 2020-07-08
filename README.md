@@ -34,12 +34,19 @@ Use different service depending on respond and post
 $ pip install git+https://github.com/noriyukipy/pybot
 ```
 
-## Usage
+## Getting Started
 
-Create working directory, and run `init` command to generate config and app templates.
+Create working directory first.
 
 ```sh
 $ mkdir work
+```
+
+PyBot requires config and app files to run.
+`init` provides you default config and app files.
+Change directory to your working directory and run `init` command to generate default config and app templates.
+
+```sh
 $ cd work
 $ python -m pybot.main init
 $ ls -1
@@ -47,7 +54,7 @@ app.py
 config.yml
 ```
 
-Then execute `run` command to talk with PyBot.
+Then execute `run` command which enables you to talk with PyBot via stdin/stdout.
 
 ```sh
 $ python -m pybot.main run --config_file=config.yml
