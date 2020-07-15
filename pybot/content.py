@@ -16,6 +16,8 @@ service:
 #    access_token_key: ""
 #    access_token_secret: ""
 #    lang: ja
+#    max_len: 50
+#    interval: 10
 
 # Slack service
 #service:

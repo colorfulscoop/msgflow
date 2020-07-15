@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 import twitter
+import time
 
 
 class TwitterMessage:
@@ -35,9 +36,28 @@ class TwitterSampleStreamService:
         self._api = api
 
     def get_stream(self):
+        need_sleep = False
         for status in self._api.GetStreamSample():
-            if "lang" in status and self._config.lang and status["lang"] == self._config.lang:
-                yield TwitterMessage(text=status["text"])
+            if "text" not in status:
+                continue
+
+            text = status["text"]
+            cond = (
+                # Check lang
+                "lang" in status and
+                self._config.lang and
+                status["lang"] == self._config.lang and
+                # Check max_len
+                ((not self._config.max_len) or
+                 len(text) <= self._config.max_len)
+            )
+            if cond:
+                yield TwitterMessage(text=text)
+                need_sleep = True
+
+            if need_sleep:
+                time.sleep(self._config.interval)
+                need_sleep = False
 
     def post(self, text):
         raise NotImplementedError()
@@ -48,4 +68,6 @@ class TwitterConfig(BaseModel):
     consumer_secret: str
     access_token_key: str
     access_token_secret: str
+    max_len: int = None
     lang: str = None
+    interval: int = None
