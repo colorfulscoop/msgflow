@@ -36,18 +36,18 @@ $ pip install git+https://github.com/noriyukipy/pybot
 
 ## Getting Started
 
-Create working directory first.
+PyBot requires config and app files to run.
+`init` provides you default config and app files.
+
+To place these files, create working directory first and change directory there.
 
 ```sh
 $ mkdir work
+$ cd work
 ```
-
-PyBot requires config and app files to run.
-`init` provides you default config and app files.
-Change directory to your working directory and run `init` command to generate default config and app templates.
+Then run `init` command to generate default config and app templates.
 
 ```sh
-$ cd work
 $ python -m pybot.main init
 $ ls -1
 app.py
