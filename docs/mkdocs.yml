@@ -1,0 +1,15 @@
+site_name: SmileChat
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+markdown_extensions:
+  - pymdownx.emoji
+  - pymdownx.magiclink
+  - admonition
+  - codehilite:
+      linenums: true
+      use_pygments: true
+
+
