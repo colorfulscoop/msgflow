@@ -1,2 +1,3 @@
 *.egg-info/
 docs/site/
+docs/docs/index.md

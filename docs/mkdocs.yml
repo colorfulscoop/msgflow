@@ -4,6 +4,7 @@ theme:
 nav:
   - Home: index.md
   - Getting Started: getting_started.md
+  - Development: development.md
 markdown_extensions:
   - pymdownx.emoji
   - pymdownx.magiclink

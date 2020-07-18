@@ -1,10 +1,6 @@
-# SmileChat
+# SmileChat - Simple Chatbot Framework
 
-SmileChat is a simple chatbot framework written in Python for simple configuration, customization and connection with several services.
-
-Documents are available on https://noriyukipy.github.io/smilechat .
-
-## Overview
+[SmileChat](https://github.com/noriyukipy/smilechat) is a simple chatbot framework written in Python for simple configuration, customization and connection with several services.
 
 SmileChat provides following simple and flexible features to develop your chatbot as fast as possible.
 
@@ -12,7 +8,7 @@ SmileChat provides following simple and flexible features to develop your chatbo
 - Simple Connection
 - Simple Customization
 
-### Simple Configuration
+## Simple Configuration
 
 SmileChat adopts YAML-formated configuration file to set up your chatbot.
 
@@ -32,7 +28,7 @@ In `service`, you can set up the service which you connect your chatbot.
 
 In`app`, you can specify your core application to generate resposne from a message got from the service defined in `service`.
 
-### Simple Connection
+## Simple Connection
 
 SmileChat provides pupular services as default.
 You can just specify each service in YAML configuration file to work with these services.
@@ -47,7 +43,7 @@ post_service:
     bot_id: ${YOUR_BOT_ID_HERE}
 ```
 
-### Simple Customization
+## Simple Customization
 
 SmileChat provides simple and flexible customization architecture to develop your own chatbot.
 
@@ -72,24 +68,6 @@ app:
   name: app.MyApp
 ```
 
-## Getting Started
+## Dive into SmileChat!
 
-Let's start working with SmileChat from here https://noriyukipy.github.io/smilechat !
-
-## Building Documents
-
-The document is provided by [MkDocs](https://www.mkdocs.org/) and published by [gh-pages](https://www.npmjs.com/package/gh-pages).
-
-First, build your document to convert markdown files to HTML files.
-
-```sh
-$ bash docs_builder.sh build
-```
-
-Then built files are placed in `docs/site` .
-
-After checking the content, run `gh-pages` to commit on gh-pages and push to GitHub.
-
-```sh
-GIT_USER="Your Name <email@example.com>" bash docs_builder.sh publish
-```
+Let's [get started](./docs/docs/getting_started.md) to work with SmileChat!

@@ -3,13 +3,14 @@ set -eu
 COMMAND=${1}
 
 if [ ${COMMAND} = "build" ]; then
-docker container run -w /work -v $(pwd):/work --rm -it python:3.8.2-buster sh -c ' \
+docker container run -w /work -v $(pwd):/work --rm -it python:3.8.2-buster sh -c " \
+    cat README.md | perl -wlp -e 's|\./docs/docs/||g' >docs/docs/index.md && \
     pip install mkdocs && \
     pip install -r docs/requirements.txt && \
     cd docs && \
     mkdocs build && \
     cd .. \
-'
+"
 elif [ ${COMMAND} = "publish" ]; then
     # Set git user name and email as a format of "Your Name <email@example.com>"
     GIT_USER=${GIT_USER}
