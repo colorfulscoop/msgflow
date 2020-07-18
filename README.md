@@ -10,8 +10,8 @@ $ pip install git+https://github.com/noriyukipy/pybot
 
 ## Documents
 
-Documents are provided in https://smilingchat.net/smilechat/.
-You can start using SmileChat with [Getting Started](https://smilingchat.net/smilechat/getting_started/) .
+Documents are provided in https://noriyukipy.github.io/smilechat .
+You can start using SmileChat with [Getting Started](https://noriyukipy.github.io/smilechat/getting_started/) .
 
 ## Building Documents
 
