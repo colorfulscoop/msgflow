@@ -72,3 +72,22 @@ you>
 | pybot.service.CliService | CLI service to work with stdin and stdout | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | pybot.service.SlackService | Slack service to work with Slack | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | pybot.service.TwitterSampleStreamService | [Twitter sample stream](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/get_statuses_sample) service to get messages from sample stream | :white_check_mark: | :x: | :x: |
+
+
+## Documents
+
+The document is provided by [MkDocs](https://www.mkdocs.org/) and published by [gh-pages](https://www.npmjs.com/package/gh-pages).
+
+First, build your document to convert markdown files to HTML files.
+
+```sh
+$ bash docs_builder.sh build
+```
+
+Then built files are placed in `docs/site` .
+
+After checking the content, run `gh-pages` to commit on gh-pages and push to GitHub.
+
+```sh
+GIT_USER="Your Name <email@example.com>" bash docs_builder.sh publish
+```
