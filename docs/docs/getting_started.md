@@ -31,7 +31,7 @@ Use different service depending on respond and post
 ## Installation
 
 ```sh
-$ pip install git+https://github.com/noriyukipy/pybot
+$ pip install git+https://github.com/noriyukipy/smilechat
 ```
 
 ## Getting Started
