@@ -15,7 +15,7 @@ SmileChat adopts YAML-formated configuration file to set up your chatbot.
 ```yaml
 # Service to connect
 service:
-  name: pybot.service.CliService
+  name: smilechat.service.CliService
   config:
     user_name: you
 
@@ -36,7 +36,7 @@ You can just specify each service in YAML configuration file to work with these 
 ```yaml
 # Slack service
 post_service:
-  name: pybot.service.SlackService
+  name: smilechat.service.SlackService
   config:
     slack_api_token: ${YOUR_TOKEN_HERE}
     channel: ${YOUR_CHANNEL_HERE}
