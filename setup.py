@@ -2,7 +2,7 @@ import setuptools
 
 
 setuptools.setup(
-    name="pybot",
+    name="smilechat",
     packages=setuptools.find_packages(),
     install_requires=[
         "pyyaml==5.3.1",

@@ -17,3 +17,9 @@ After checking the content, run `gh-pages` to commit on gh-pages and push to Git
 ```sh
 $ GIT_USER="Your Name <email@example.com>" bash docs_builder.sh publish
 ```
+
+## Test
+
+```sh
+$ circleci local execute --job init-test
+```

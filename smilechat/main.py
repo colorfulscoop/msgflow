@@ -1,9 +1,9 @@
 import yaml
 import logging
 import os
-from pybot.content import INIT_CONFIG
-from pybot.content import INIT_APP
-from pybot.controller import Controller
+from .content import INIT_CONFIG
+from .content import INIT_APP
+from .controller import Controller
 
 
 def load_module(name):

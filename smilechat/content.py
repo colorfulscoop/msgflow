@@ -3,13 +3,13 @@ INIT_CONFIG = """
 
 # CLI Service
 service:
-  name: pybot.service.CliService
+  name: smilechat.service.CliService
   config:
     user_name: you
 
 # Twitter service
 #service:
-#  name: pybot.service.TwitterSampleStreamService
+#  name: smilechat.service.TwitterSampleStreamService
 #  config:
 #    consumer_key: ""
 #    consumer_secret: ""
@@ -21,7 +21,7 @@ service:
 
 # Slack service
 #service:
-#  name: pybot.service.SlackService
+#  name: smilechat.service.SlackService
 #  config:
 #    slack_api_token: ""
 #    channel: ""
@@ -33,7 +33,7 @@ service:
 # define post service.
 
 #post_service:
-#  name: pybot.service.CliService
+#  name: smilechat.service.CliService
 #  config:
 #    user_name: you
 
