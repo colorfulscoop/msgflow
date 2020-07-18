@@ -31,7 +31,12 @@ class CliService:
 
     def get_stream(self):
         while True:
-            text = input(f"{self._config.user_name}> ")
+            try:
+                text = input(f"{self._config.user_name}> ")
+            except EOFError:
+                # When user inputs EOF (<CTRL>-D), return stream
+                return
+
             yield CliMessage(text=text)
 
     def post(self, text):

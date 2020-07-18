@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  init-test:
+    docker:
+      - image: python:3.8.2-buster
+    steps:
+      - checkout
+      - run:
+          name: Install package
+          command: |
+            pip install .
+      - run:
+          name: Initialize smilechat and run with default configuration
+          command: |
+            mkdir work
+            cd work
+            python -m smilechat.main init
+            echo Hello | python -m smilechat.main run --config_file=config.yml
