@@ -21,5 +21,5 @@ $ GIT_USER="Your Name <email@example.com>" bash docs_builder.sh publish
 ## Test
 
 ```sh
-$ circleci local execute --job init-test
+$ circleci local execute --job test-small
 ```

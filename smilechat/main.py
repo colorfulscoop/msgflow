@@ -1,6 +1,6 @@
-import yaml
 import logging
 import os
+from .config import load_yaml
 from .content import INIT_CONFIG
 from .content import INIT_APP
 from .controller import Controller
@@ -57,7 +57,7 @@ class Main:
         # Set logging
         logging.basicConfig(level=logging.INFO)
 
-        yaml_dic = yaml.safe_load(open(config_file))
+        yaml_dic = load_yaml(config_file)
         service = build_service(yaml_dic)
         post_service = build_post_service(yaml_dic, service=service)
         app = build_app(yaml_dic=yaml_dic, post_service=post_service)

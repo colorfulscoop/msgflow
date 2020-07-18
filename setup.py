@@ -10,6 +10,8 @@ setuptools.setup(
         "fire==0.3.1",
         "python-twitter==3.5",
         "slackclient==1.2.1",
+        "envyaml==0.2060",
+        "pytest==5.4.3",
     ],
     version="0.0.0",
     author="Noriyuki Abe",
