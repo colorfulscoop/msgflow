@@ -63,7 +63,7 @@ class MyApp:
 
 Then, the class can be specified in your configuration file.
 
-```
+```yaml
 app:
   name: app.MyApp
 ```
