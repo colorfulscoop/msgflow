@@ -1,6 +1,9 @@
 site_name: SmileChat
 theme:
   name: material
+  palette:
+    primary: deep orange
+    accent: deep orange
 nav:
   - Home: index.md
   - Getting Started: getting_started.md
@@ -14,4 +17,6 @@ markdown_extensions:
       linenums: true
       use_pygments: true
 
-
+# Add source repository
+repo_name: noriyukipy/smilechat
+repo_url: https://github.com/noriyukipy
