@@ -2,8 +2,8 @@ site_name: SmileChat
 theme:
   name: material
   palette:
-    primary: deep orange
-    accent: deep orange
+    primary: white
+    accent: white
 nav:
   - Home: index.md
   - Getting Started: getting_started.md

@@ -71,3 +71,8 @@ app:
 ## Dive into SmileChat!
 
 Let's [get started](./docs/docs/getting_started.md) to work with SmileChat!
+
+Other documents are also available:
+
+- [Development - how to build document, test code](./docs/docs/development.md)
+- [Changelog](./docs/docs/CHANGELOG.md)
