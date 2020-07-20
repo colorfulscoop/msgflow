@@ -18,7 +18,7 @@ class SlackMessage:
         self._api.api_call(
             "chat.postMessage",
             channel=self._config.channel,
-            text=f"<@{self._user}> {self._text}",
+            text=f"<@{self._user}> {text}",
             as_user=True,
         )
 
