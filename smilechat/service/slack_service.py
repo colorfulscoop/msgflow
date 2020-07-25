@@ -1,5 +1,7 @@
 from pydantic import BaseModel
-from slackclient import SlackClient
+import slackclient
+import logging
+logging.getLogger(__file__)
 
 
 class SlackMessage:
@@ -24,7 +26,7 @@ class SlackMessage:
 
 
 class SlackService:
-    def __init__(self, config, api_cls=SlackClient):
+    def __init__(self, config, api_cls=slackclient.SlackClient):
         config = SlackConfig(**config)
         api = api_cls(
             token=config.slack_api_token,
@@ -38,24 +40,30 @@ class SlackService:
             raise Exception()
 
         while True:
-            msgs = self._api.rtm_read()
-            for msg in msgs:
-                if msg["type"] != "message":
-                    continue
-                text = msg["text"]
-                user = msg["user"]
-                bot_user = self._config.bot_id
+            try:
+                msgs = self._api.rtm_read()
+                for msg in msgs:
+                    if msg["type"] != "message":
+                        continue
+                    text = msg["text"]
+                    user = msg["user"]
+                    bot_user = self._config.bot_id
 
-                if bot_user not in text:
-                    continue
+                    if bot_user not in text:
+                        continue
 
-                text = text.replace(f"<@{bot_user}>", "")
+                    text = text.replace(f"<@{bot_user}>", "")
 
-                yield SlackMessage(
-                    text=text,
-                    user=user,
-                    api=self._api,
-                    config=self._config,
+                    yield SlackMessage(
+                        text=text,
+                        user=user,
+                        api=self._api,
+                        config=self._config,
+                    )
+            except slackclient.server.SlackConnectionError:
+                logging.info(
+                    "Connection to Slack RTM is brokes."
+                    "Reconnect again"
                 )
 
     def post(self, text):

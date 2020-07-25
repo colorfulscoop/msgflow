@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixed
-- Fix slack response to send system text
+- Slack response bug which sends system text to user as a reply
+- Retry RTM Slack connection when connection is broken
 
 ## [0.1.0] - 2020-07-18
 ### Added
