@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 import slackclient
+import time
 import logging
 logging.getLogger(__file__)
 
@@ -35,12 +36,18 @@ class SlackService:
         self._api = api
 
     def get_stream(self):
-        con = self._api.rtm_connect()
-        if not con:
-            raise Exception()
+        connection_established = False
 
         while True:
             try:
+                if not connection_established:
+                    logging.info("Connecting to Slack RTM")
+                    con = self._api.rtm_connect()
+                    if not con:
+                        raise Exception()
+                    logging.info("Connection established")
+                    connection_established = True
+
                 msgs = self._api.rtm_read()
                 for msg in msgs:
                     if msg["type"] != "message":
@@ -63,8 +70,10 @@ class SlackService:
             except slackclient.server.SlackConnectionError:
                 logging.info(
                     "Connection to Slack RTM is brokes."
-                    "Reconnect again"
+                    "Reconnect again after 10 seconds"
                 )
+                connection_established = False
+                time.sleep(10)
 
     def post(self, text):
         self._api.api_call(
