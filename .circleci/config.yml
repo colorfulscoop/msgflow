@@ -1,5 +1,18 @@
 version: 2
 jobs:
+  check_style:
+    docker:
+      - image: python:3.8.2-buster
+    steps:
+      - checkout
+      - run:
+          name: "Install package"
+          command: |
+            pip install black
+      - run:
+          name: "Check code style"
+          command: |
+            black --check smilechat
   test-small:
     docker:
       - image: python:3.8.2-buster
