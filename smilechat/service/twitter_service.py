@@ -4,6 +4,7 @@ import twitter
 import time
 import requests
 import logging
+
 logging = logging.getLogger(__file__)
 
 
@@ -59,12 +60,15 @@ class TwitterSampleStreamService:
 
                     cond = (
                         # Check lang
-                        "lang" in status and
-                        self._config.lang and
-                        status["lang"] == self._config.lang and
+                        "lang" in status
+                        and self._config.lang
+                        and status["lang"] == self._config.lang
+                        and
                         # Check max_len
-                        ((not self._config.max_len) or
-                         len(text) <= self._config.max_len)
+                        (
+                            (not self._config.max_len)
+                            or len(text) <= self._config.max_len
+                        )
                     )
                     if cond:
                         yield TwitterMessage(text=text)
@@ -73,12 +77,9 @@ class TwitterSampleStreamService:
                     if need_sleep:
                         time.sleep(self._config.interval)
                         need_sleep = False
-        
+
             except requests.exceptions.ChunkedEncodingError:
-                logging.info(
-                    "Connection to Twitter was broken."
-                    "Reconnect again"
-                )
+                logging.info("Connection to Twitter was broken." "Reconnect again")
 
     def post(self, text):
         raise NotImplementedError()

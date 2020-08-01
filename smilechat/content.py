@@ -46,10 +46,12 @@ app:
 """
 
 
-INIT_APP = """
+INIT_APP = (
+    """
 class MyApp:
     def __init__(self, service, config):
-        """"""
+        """
+    """
         self._service = service
 
     def handle(self, message):
@@ -57,3 +59,4 @@ class MyApp:
         message.respond(res)
         self._service.post(f'Log: "{message.text}"')
 """
+)

@@ -7,7 +7,7 @@ from .controller import Controller
 
 
 def load_module(name):
-    components = name.split('.')
+    components = name.split(".")
     mod = __import__(".".join(components[:-1]), fromlist=[components[-1]])
     return getattr(mod, components[-1])
 
