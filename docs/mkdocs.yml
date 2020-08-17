@@ -18,5 +18,5 @@ markdown_extensions:
       use_pygments: true
 
 # Add source repository
-repo_name: noriyukipy/smilechat
-repo_url: https://github.com/noriyukipy/smilechat
+repo_name: noriyukipy/msgflow
+repo_url: https://github.com/noriyukipy/msgflow

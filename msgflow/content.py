@@ -3,13 +3,13 @@ INIT_CONFIG = """
 
 # CLI Service
 service:
-  name: smilechat.service.CliService
+  name: msgflow.service.CliService
   config:
     user_name: you
 
 # Twitter service
 #service:
-#  name: smilechat.service.TwitterSampleStreamService
+#  name: msgflow.service.TwitterSampleStreamService
 #  config:
 #    consumer_key: ""
 #    consumer_secret: ""
@@ -21,7 +21,7 @@ service:
 
 # Slack service
 #service:
-#  name: smilechat.service.SlackService
+#  name: msgflow.service.SlackService
 #  config:
 #    slack_api_token: ""
 #    channel: ""
@@ -33,7 +33,7 @@ service:
 # define post service.
 
 #post_service:
-#  name: smilechat.service.CliService
+#  name: msgflow.service.CliService
 #  config:
 #    user_name: you
 
