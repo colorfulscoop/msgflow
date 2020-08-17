@@ -1,8 +1,8 @@
-# SmileChat - Simple Chatbot Framework
+# msgFlow
 
-[SmileChat](https://github.com/noriyukipy/smilechat) is a simple chatbot framework written in Python for simple configuration, customization and connection with several services.
+[msgFlow](https://github.com/noriyukipy/msgflow) is a simple chatbot framework written in Python for simple configuration, customization and connection with several services.
 
-SmileChat provides following simple and flexible features to develop your chatbot as fast as possible.
+msgFlow provides following simple and flexible features to develop your chatbot as fast as possible.
 
 - Simple Configuration
 - Simple Connection
@@ -10,12 +10,12 @@ SmileChat provides following simple and flexible features to develop your chatbo
 
 ## Simple Configuration
 
-SmileChat adopts YAML-formated configuration file to set up your chatbot.
+msgFlow adopts YAML-formated configuration file to set up your chatbot.
 
 ```yaml
 # Service to connect
 service:
-  name: smilechat.service.CliService
+  name: msgflow.service.CliService
   config:
     user_name: you
 
@@ -30,13 +30,13 @@ In`app`, you can specify your core application to generate resposne from a messa
 
 ## Simple Connection
 
-SmileChat provides pupular services as default.
+msgFlow provides pupular services as default.
 You can just specify each service in YAML configuration file to work with these services.
 
 ```yaml
 # Slack service
 post_service:
-  name: smilechat.service.SlackService
+  name: msgflow.service.SlackService
   config:
     slack_api_token: ${YOUR_TOKEN_HERE}
     channel: ${YOUR_CHANNEL_HERE}
@@ -45,7 +45,7 @@ post_service:
 
 ## Simple Customization
 
-SmileChat provides simple and flexible customization architecture to develop your own chatbot.
+msgFlow provides simple and flexible customization architecture to develop your own chatbot.
 
 To implement your custom application, you only need to write you application in a specific-formatted class.
 
@@ -68,9 +68,9 @@ app:
   name: app.MyApp
 ```
 
-## Dive into SmileChat
+## Dive into msgFlow
 
-Let's [get started](./docs/docs/getting_started.md) to work with SmileChat!
+Let's [get started](./docs/docs/getting_started.md) to work with msgFlow!
 
 All the documents are listed here;
 

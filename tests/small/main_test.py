@@ -1,6 +1,6 @@
 import tempfile
 import os
-from smilechat.config import load_yaml
+from msgflow.config import load_yaml
 
 
 def write(fp, content):
