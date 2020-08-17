@@ -13,6 +13,6 @@ setuptools.setup(
         "envyaml==0.2060",
         "pytest==5.4.3",
     ],
-    version="0.1.1",
+    version="0.2.0",
     author="Noriyuki Abe",
 )

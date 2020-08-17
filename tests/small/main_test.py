@@ -11,13 +11,13 @@ def write(fp, content):
 def test_load_yaml():
     yaml_str = """
 service:
-  name: smilechat.service.CliService
+  name: msgflow.service.CliService
   config:
     user_name: you
     """
     want = {
         "service": {
-          "name": "smilechat.service.CliService",
+          "name": "msgflow.service.CliService",
           "config": {"user_name": "you"},
         }
     }
@@ -32,7 +32,7 @@ service:
 def test_load_yaml_parse_with_env_var():
     yaml_str = """
 service:
-  name: smilechat.service.CliService
+  name: msgflow.service.CliService
   config:
     user_name: ${USER_NAME}
     password: ${PASSWORD}
@@ -45,7 +45,7 @@ service:
 
     want = {
         "service": {
-            "name": "smilechat.service.CliService",
+            "name": "msgflow.service.CliService",
             "config": {
                 "user_name": "name_from_env",
                 "password": "password_from_env"
@@ -67,7 +67,7 @@ service:
 def test_load_yaml_parse_with_env_var_but_not_defined():
     yaml_str = """
 service:
-  name: smilechat.service.CliService
+  name: msgflow.service.CliService
   config:
     user_name: ${USER_NAME}
     password: ${PASSWORD}
@@ -80,7 +80,7 @@ service:
 
     want = {
         "service": {
-            "name": "smilechat.service.CliService",
+            "name": "msgflow.service.CliService",
             "config": {
                 "user_name": "name_from_env",
                 "password": "${PASSWORD}"

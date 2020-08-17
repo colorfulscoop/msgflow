@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2020-08-17
+### Changed
+- Package name to msgFlow
+
 ## [0.1.1] - 2020-07-25
 ### Fixed
 - Slack response bug which sends system text to user as a reply
