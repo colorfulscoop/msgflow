@@ -63,6 +63,7 @@ class SlackService:
                     yield SlackMessage(
                         text=text, user=user, api=self._api, config=self._config,
                     )
+                time.sleep(1)
             except slackclient.server.SlackConnectionError:
                 logging.info(
                     "Connection to Slack RTM is brokes."
