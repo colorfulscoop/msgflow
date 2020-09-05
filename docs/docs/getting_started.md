@@ -47,6 +47,7 @@ you>
 | msgflow.service.CliService | CLI service to work with stdin and stdout | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | msgflow.service.SlackService | Slack service to work with Slack | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | msgflow.service.TwitterSampleStreamService | [Twitter sample stream](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/get_statuses_sample) service to get messages from sample stream | :white_check_mark: | :x: | :x: |
+| msgflow.service.TwitterMentionsTimeline | [Twitter mentions timeline](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-mentions_timeline) service to get messages from mentions timeline | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 ## Architecture
 
