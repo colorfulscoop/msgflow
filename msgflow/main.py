@@ -1,9 +1,10 @@
-import logging
 import os
 from .config import load_yaml
 from .content import INIT_CONFIG
 from .content import INIT_APP
 from .controller import Controller
+import logging
+logger = logging.getLogger(__file__)
 
 
 def load_module(name):
@@ -31,7 +32,7 @@ def build_post_service(yaml_dic, service):
         cls, config = load_class_and_config(yaml_dic, "post_service")
         return cls(config)
     else:
-        logging.info(
+        logger.info(
             '"post_service" is not defined in config file. '
             '"service" is used for "post_service" instead.'
         )
