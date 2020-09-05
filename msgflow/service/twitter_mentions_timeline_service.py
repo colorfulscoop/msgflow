@@ -1,3 +1,10 @@
+"""
+This module implements a service for Twitter mentions timeline.
+
+- Twitter API document: https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-mentions_timeline
+- Python Twitter document: https://python-twitter.readthedocs.io/en/latest/twitter.html?highlight=since_id#twitter.api.Api.GetMentions
+"""
+
 from pydantic import BaseModel
 import twitter
 import time
