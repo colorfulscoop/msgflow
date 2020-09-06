@@ -9,6 +9,7 @@ from pydantic import BaseModel
 import twitter
 import time
 import re
+import requests
 import logging
 logger = logging.getLogger(__file__)
 
@@ -37,8 +38,11 @@ class TwitterMessage:
         screen_name = self._status.user.screen_name
         msg = f"@{screen_name} {text}"
         in_reply_to = self._status.id
-        self._api.PostUpdate(msg, in_reply_to_status_id=in_reply_to)
-        logger.info(f"Post update: in_reply_to_status_id={in_reply_to}, text={msg}")
+        try:
+            self._api.PostUpdate(msg, in_reply_to_status_id=in_reply_to)
+            logger.info(f"Post update: in_reply_to_status_id={in_reply_to}, text={msg}")
+        except requests.exceptions.ConnectionError:
+            logger.info(f"Post update error: requests.exceptions.ConnectionError raised")
 
 
 class TwitterMentionsTimelineService:
