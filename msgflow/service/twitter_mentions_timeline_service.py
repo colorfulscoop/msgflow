@@ -41,8 +41,8 @@ class TwitterMessage:
         try:
             self._api.PostUpdate(msg, in_reply_to_status_id=in_reply_to)
             logger.info(f"Post update: in_reply_to_status_id={in_reply_to}, text={msg}")
-        except requests.exceptions.ConnectionError:
-            logger.info(f"Post update error: requests.exceptions.ConnectionError raised")
+        except requests.exceptions.ConnectionError as err:
+            logger.exception(f"Post update error: %s", err)
 
 
 class TwitterMentionsTimelineService:
@@ -63,7 +63,13 @@ class TwitterMentionsTimelineService:
 
         # Set the initial since_id
         while True:
-            mentions = self._api.GetMentions(since_id=since_id)
+            try:
+                mentions = self._api.GetMentions(since_id=since_id)
+            except requests.exceptions.ConnectionError as err:
+                logger.exception(f"twitter.GetMentions error: %s", err)
+                time.sleep(self._config.interval)
+                continue
+
             if mentions:
                 since_id = mentions[0].id
                 logger.info(f"Set initial since_id to {since_id}")
@@ -71,7 +77,13 @@ class TwitterMentionsTimelineService:
             time.sleep(self._config.interval)
 
         while True:
-            mentions = self._api.GetMentions(since_id=since_id)
+            try:
+                mentions = self._api.GetMentions(since_id=since_id)
+            except requests.exceptions.ConnectionError as err:
+                logger.exception(f"twitter.GetMentions error: %s", err)
+                time.sleep(self._config.interval)
+                continue
+
             for status in mentions:
                 logger.info(f'Get mention: user=@{status.user.screen_name}, status={status.text}')
                 yield TwitterMessage(api=self._api, status=status)
@@ -84,5 +96,8 @@ class TwitterMentionsTimelineService:
             time.sleep(self._config.interval)
 
     def post(self, text):
-        self._api.PostUpdate(text)
-        logger.info(f"Post update: text={text}")
+        try:
+            self._api.PostUpdate(text)
+            logger.info(f"Post update: text={text}")
+        except requests.exceptions.ConnectionError as err:
+            logger.exception(f"twitter.PostUpdate error: %s", err)
