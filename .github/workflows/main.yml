@@ -1,6 +1,18 @@
 name: unittest
 on: [push]
 jobs:
+  check-code-style:
+    runs-on: ubuntu-18.04
+    container:
+      image: python:3.8.2-buster
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: pip install black
+      - name: Check code style
+        run: black --check msgflow
+
   test-small:
     runs-on: ubuntu-18.04
     container:
