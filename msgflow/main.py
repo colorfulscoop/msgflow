@@ -4,6 +4,7 @@ from .content import INIT_CONFIG
 from .content import INIT_APP
 from .controller import Controller
 import logging
+
 logger = logging.getLogger(__file__)
 
 
