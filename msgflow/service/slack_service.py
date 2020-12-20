@@ -30,7 +30,9 @@ class SlackMessage:
 class SlackService:
     def __init__(self, config, api_cls=slackclient.SlackClient):
         config = SlackConfig(**config)
-        api = api_cls(token=config.slack_api_token,)
+        api = api_cls(
+            token=config.slack_api_token,
+        )
         self._config = config
         self._api = api
 
@@ -61,7 +63,10 @@ class SlackService:
                     text = text.replace(f"<@{bot_user}>", "")
 
                     yield SlackMessage(
-                        text=text, user=user, api=self._api, config=self._config,
+                        text=text,
+                        user=user,
+                        api=self._api,
+                        config=self._config,
                     )
                 time.sleep(1)
             except slackclient.server.SlackConnectionError:
@@ -74,7 +79,10 @@ class SlackService:
 
     def post(self, text):
         self._api.api_call(
-            "chat.postMessage", channel=self._config.channel, text=text, as_user=True,
+            "chat.postMessage",
+            channel=self._config.channel,
+            text=text,
+            as_user=True,
         )
 
 

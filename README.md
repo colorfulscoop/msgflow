@@ -1,5 +1,7 @@
 # msgFlow
 
+![](https://github.com/noriyukipy/msgflow/workflows/unittest/badge.svg)
+
 [msgFlow](https://github.com/noriyukipy/msgflow) is a simple chatbot framework written in Python for simple configuration, customization and connection with several services.
 
 msgFlow provides following simple and flexible features to develop your chatbot as fast as possible.

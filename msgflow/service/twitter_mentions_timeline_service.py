@@ -11,6 +11,7 @@ import time
 import re
 import requests
 import logging
+
 logger = logging.getLogger(__file__)
 
 
@@ -85,7 +86,9 @@ class TwitterMentionsTimelineService:
                 continue
 
             for status in mentions:
-                logger.info(f'Get mention: user=@{status.user.screen_name}, status={status.text}')
+                logger.info(
+                    f"Get mention: user=@{status.user.screen_name}, status={status.text}"
+                )
                 yield TwitterMessage(api=self._api, status=status)
 
             # update since_id
