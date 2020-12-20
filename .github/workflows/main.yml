@@ -1,0 +1,24 @@
+name: unittest
+on: [push]
+jobs:
+  test-small:
+    runs-on: ubuntu-18.04
+    container:
+      image: python:3.8.2-buster
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          pip install .
+          pip install pytest~=5.0
+      - name: Run small size tests
+        run: |
+          pytest -v tests/small
+      - name: Run CLI tests
+        run: |
+          mkdir work
+          cd work
+          python -m msgflow.main init
+          echo Hello | python -m msgflow.main run --config_file=config.yml
+          cd ..
