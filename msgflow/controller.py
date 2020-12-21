@@ -1,5 +1,8 @@
+from .protocol import Service
+
+
 class Controller:
-    def __init__(self, service, app):
+    def __init__(self, service: Service, app):
         self._service = service
         self._app = app
 
