@@ -1,29 +1,15 @@
 name: unittest
 on: [push]
 jobs:
-  check-code-style:
-    runs-on: ubuntu-18.04
-    container:
-      image: python:3.8.2-buster
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: pip install black
-      - name: Check code style
-        run: black --check msgflow
-
   test-small:
     runs-on: ubuntu-18.04
     container:
-      image: python:3.8.2-buster
+      image: python:3.9.1-buster
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: |
-          pip install .
-          pip install pytest~=5.0
+        run: pip install .[test]
       - name: Run small size tests
         run: |
           pytest -v tests/small
@@ -34,3 +20,5 @@ jobs:
           python -m msgflow.main init
           echo Hello | python -m msgflow.main run --config_file=config.yml
           cd ..
+      - name: Check code style
+        run: black --check msgflow
