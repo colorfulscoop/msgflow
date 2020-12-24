@@ -35,6 +35,10 @@ class TwitterMessage:
         text = re.sub(r"\s*@[a-zA-Z0-9_]+\s*", "", text)
         return text
 
+    @property
+    def conversation_id(self) -> str:
+        return self._status.user.screen_name
+
     def respond(self, text):
         screen_name = self._status.user.screen_name
         msg = f"@{screen_name} {text}"

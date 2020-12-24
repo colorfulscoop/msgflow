@@ -3,13 +3,19 @@ from pydantic import BaseModel
 
 
 class CliMessage:
-    def __init__(self, text):
+    def __init__(self, text: str, user_name: str):
         """"""
         self._text = text
+        self._user_name = user_name
 
     @property
     def text(self):
         return self._text
+
+    @property
+    def conversation_id(self) -> str:
+        # In CliService, a conversation is identified by the user's name
+        return self._user_name
 
     def respond(self, text):
         fmt = f"bot> {text}"
@@ -33,11 +39,13 @@ class CliService:
         while True:
             try:
                 text = input(f"{self._config.user_name}> ")
-            except EOFError:
-                # When user inputs EOF (<CTRL>-D), return stream
+            except (EOFError, KeyboardInterrupt):
+                # When user inputs EOF (<CTRL>-D), saye hello good bye and exit stream
+                print("")
+                print("Bye!")
                 return
 
-            yield CliMessage(text=text)
+            yield CliMessage(text=text, user_name=self._config.user_name)
 
     def post(self, text):
         print(text, file=self._out_fd)

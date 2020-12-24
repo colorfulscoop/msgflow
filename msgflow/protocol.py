@@ -6,6 +6,10 @@ class Message(Protocol):
     def text(self) -> str:
         raise NotImplementedError()
 
+    @property
+    def conversation_id(self) -> str:
+        raise NotImplementedError()
+
     def respond(self, text: str) -> None:
         raise NotImplementedError()
 
