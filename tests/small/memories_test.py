@@ -1,0 +1,25 @@
+from msgflow.memories import ContextMemory 
+
+
+def test_context_memory():
+    memory = ContextMemory()
+
+    memory.add("user1", "message1")
+    memory.add("user1", "message2")
+    memory.add("user2", "message3")
+
+    assert memory.get("user1") == ["message1", "message2"]
+    assert memory.get("user2") == ["message3"]
+    assert memory.get("user3") == []
+
+
+def test_context_memory_max_history():
+    memory = ContextMemory(max_history=1)
+
+    memory.add("user1", "message1")
+    memory.add("user1", "message2")
+    memory.add("user2", "message3")
+
+    assert memory.get("user1") == ["message2"]
+    assert memory.get("user2") == ["message3"]
+    assert memory.get("user3") == []
