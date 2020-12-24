@@ -1,4 +1,4 @@
-from msgflow.memories import ConversationMemory 
+from msgflow.memory import ConversationMemory 
 
 
 def test_context_memory():
