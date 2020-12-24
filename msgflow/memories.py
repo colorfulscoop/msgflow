@@ -1,4 +1,4 @@
-class ContextMemory:
+class ConversationMemory:
     def __init__(self, max_history=None):
         self._max_history = max_history
         self._context = dict()

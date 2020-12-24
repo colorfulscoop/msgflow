@@ -1,8 +1,8 @@
-from msgflow.memories import ContextMemory 
+from msgflow.memories import ConversationMemory 
 
 
 def test_context_memory():
-    memory = ContextMemory()
+    memory = ConversationMemory()
 
     memory.add("user1", "message1")
     memory.add("user1", "message2")
@@ -14,7 +14,7 @@ def test_context_memory():
 
 
 def test_context_memory_max_history():
-    memory = ContextMemory(max_history=1)
+    memory = ConversationMemory(max_history=1)
 
     memory.add("user1", "message1")
     memory.add("user1", "message2")
