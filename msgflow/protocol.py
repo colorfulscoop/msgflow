@@ -4,15 +4,14 @@ from typing import Protocol
 class Message(Protocol):
     @property
     def text(self) -> str:
-        return self._text
+        raise NotImplementedError()
+
+    @property
+    def conversation_id(self) -> str:
+        raise NotImplementedError()
 
     def respond(self, text: str) -> None:
-        self._api.api_call(
-            "chat.postMessage",
-            channel=self._config.channel,
-            text=f"<@{self._user}> {text}",
-            as_user=True,
-        )
+        raise NotImplementedError()
 
 
 class Service(Protocol):

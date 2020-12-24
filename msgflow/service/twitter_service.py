@@ -9,13 +9,18 @@ logging = logging.getLogger(__file__)
 
 
 class TwitterMessage:
-    def __init__(self, text):
+    def __init__(self, status):
         """"""
-        self._text = text
+        self._status = status
 
     @property
     def text(self):
         return self._text
+        return self._status["text"]
+
+    @property
+    def conversation_id(self) -> str:
+        return self._status.user.screen_name
 
     def respond(self, text):
         raise NotImplementedError()
@@ -71,7 +76,7 @@ class TwitterSampleStreamService:
                         )
                     )
                     if cond:
-                        yield TwitterMessage(text=text)
+                        yield TwitterMessage(status=status)
                         need_sleep = True
 
                     if need_sleep:

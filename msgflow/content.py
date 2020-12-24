@@ -46,17 +46,14 @@ app:
 """
 
 
-INIT_APP = (
-    """
+INIT_APP = """
 class MyApp:
     def __init__(self, service, config):
-        """
-    """
+
         self._service = service
 
-    def handle(self, message):
-        res = f'{message.text}'
-        message.respond(res)
-        self._service.post(f'Log: "{message.text}"')
+    def handle(self, msg):
+        log_msg = f'App got message: Message(text="{msg.text}", conversation_id="{msg.conversation_id}")'
+        self._service.post(log_msg)
+        msg.respond(f'Thank you for your message "{msg.text}"!')
 """
-)

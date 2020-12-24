@@ -7,7 +7,7 @@ logging.getLogger(__file__)
 
 
 class SlackMessage:
-    def __init__(self, text, user, api, config):
+    def __init__(self, text: str, user: str, api, config):
         """"""
         self._text = text
         self._user = user
@@ -17,6 +17,10 @@ class SlackMessage:
     @property
     def text(self):
         return self._text
+
+    @property
+    def conversation_id(self) -> str:
+        return self._user
 
     def respond(self, text):
         self._api.api_call(

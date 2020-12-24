@@ -68,6 +68,9 @@ class Main:
         service: Service = build_service(yaml_dic)
         post_service: Service = build_post_service(yaml_dic, service=service)
 
+        logger.info(f"service: {service.__class__.__name__}")
+        logger.info(f"post_service: {post_service.__class__.__name__}")
+
         # Build app
         app: App = build_app(yaml_dic=yaml_dic, post_service=post_service)
 
