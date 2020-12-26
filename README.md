@@ -66,15 +66,6 @@ you>
 Bye!
 ```
 
-## How It Works
-
-As you saw in the previous section, msgFlow requires two types of files to run.
-
-One is the configuration file. The`config.yml` file which the `init` command generates is the configuration file.
-
-The other is a Python script which defines the `App` class.
-
-
 ## Service
 
 | Name | Description | Stream | Post | Respond to message |
