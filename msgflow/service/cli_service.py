@@ -38,10 +38,9 @@ class CliService:
     def get_stream(self):
         while True:
             try:
-                text = input(f"{self._config.user_name}> ")
+                text = input()
             except (EOFError, KeyboardInterrupt):
                 # When user inputs EOF (<CTRL>-D), saye hello good bye and exit stream
-                print("")
                 print("Bye!")
                 return
 
