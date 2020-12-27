@@ -4,7 +4,11 @@ import uvicorn
 
 
 def build_api(handler):
-    app = FastAPI(title="msgFlow", description="", version="0.0.0",)
+    app = FastAPI(
+        title="msgFlow",
+        description="",
+        version="0.0.0",
+    )
     app.add_api_route("/handle", handler.handle, methods=["POST"])
     return app
 
