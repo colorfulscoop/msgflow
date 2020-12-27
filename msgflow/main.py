@@ -2,7 +2,7 @@ import os
 from .config import load_yaml
 from .content import INIT_CONFIG
 from .content import INIT_APP
-from .controller import Bot
+from .bot import Bot
 from .protocol import Service
 from .protocol import App
 from .logging import print_json_log
@@ -85,8 +85,8 @@ class Main:
         app: App = build_app(yaml_dic=yaml_dic)
 
         # Build controller and start
-        controller = Bot(service=service, post_service=post_service, app=app)
-        controller.start()
+        bot = Bot(service=service, post_service=post_service, app=app)
+        bot.start()
 
 
 if __name__ == "__main__":

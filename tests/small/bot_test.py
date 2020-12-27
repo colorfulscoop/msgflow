@@ -1,4 +1,4 @@
-from msgflow.controller import Bot
+from msgflow.bot import Bot
 
 
 class MockMessage:
