@@ -29,7 +29,7 @@ class Handler:
 
     def handle(self, req: Request):
         msg = WebapiMessage(text=req.text, conversation_id=req.conversation_id)
-        self._bot.handle_msg(msg)
+        self._bot.handle_background(msg)
         return Response(texts=msg.msgs, request=req)
 
 
@@ -66,7 +66,7 @@ class WebapiService:
         # Set attributes
         self._config = WebapiConfig(**config)
 
-    def start(self, bot):
+    def start_msg_stream(self, bot):
         handler = Handler(bot=bot)
         app = build_api(handler)
         uvicorn.run(app=app, host=self._config.host, port=self._config.port)

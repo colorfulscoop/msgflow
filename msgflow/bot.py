@@ -16,7 +16,7 @@ class _ProducerClose:
 def _craete_producer_thread(bot):
     def run():
         # service will return None when it finishes providing messages.
-        _ = bot._service.start(bot)
+        _ = bot._service.start_msg_stream(bot)
         bot._queue.put(_ProducerClose())
         print_json_log(logger, "debug", "Finish producer thread")
 
@@ -35,7 +35,7 @@ def _create_consumer_thread(bot):
                 )
                 print_json_log(logger, "debug", "Finish consumer thread")
                 return
-            bot.handle_msg(msg)
+            bot.handle(msg)
 
     t = threading.Thread(target=run, daemon=True)
     return t
@@ -58,6 +58,7 @@ class Bot:
 
         try:
             producer_thread.join()
+            consumer_thread.join()
         except KeyboardInterrupt:
             print_json_log(logger, "debug", "Finish main thread")
             return
@@ -66,8 +67,8 @@ class Bot:
         self._post_service.post(text=text)
 
     # Following methods are used in services
-    def handle_msg(self, msg: Message):
+    def handle(self, msg: Message):
         self._app.handle(bot=self, msg=msg)
 
-    def put_msg(self, msg: Message):
+    def handle_background(self, msg: Message):
         self._queue.put(msg)

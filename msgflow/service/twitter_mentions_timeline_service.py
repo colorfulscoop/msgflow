@@ -63,7 +63,7 @@ class TwitterMentionsTimelineService:
         self._config = config
         self._api = api
 
-    def get_stream(self):
+    def start_msg_stream(self, bot):
         since_id = 1
 
         # Set the initial since_id
@@ -93,7 +93,7 @@ class TwitterMentionsTimelineService:
                 logger.info(
                     f"Get mention: user=@{status.user.screen_name}, status={status.text}"
                 )
-                yield TwitterMessage(api=self._api, status=status)
+                bot.handle_background(TwitterMessage(api=self._api, status=status))
 
             # update since_id
             if mentions:

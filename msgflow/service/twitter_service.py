@@ -45,7 +45,7 @@ class TwitterSampleStreamService:
         self._config = config
         self._api = api
 
-    def start(self, bot):
+    def start_msg_stream(self, bot):
         while True:
             try:
                 need_sleep = False
@@ -76,7 +76,7 @@ class TwitterSampleStreamService:
                         )
                     )
                     if cond:
-                        bot.put_msg(TwitterMessage(status=status))
+                        bot.handle_background(TwitterMessage(status=status))
                         need_sleep = True
 
                     if need_sleep:

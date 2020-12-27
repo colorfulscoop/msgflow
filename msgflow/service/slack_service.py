@@ -40,7 +40,7 @@ class SlackService:
         self._config = config
         self._api = api
 
-    def start(self, bot):
+    def start_msg_stream(self, bot):
         connection_established = False
 
         while True:
@@ -72,7 +72,7 @@ class SlackService:
                         api=self._api,
                         config=self._config,
                     )
-                    bot.put_msg(msg)
+                    bot.handle_background(msg)
 
                 time.sleep(1)
             except slackclient.server.SlackConnectionError:

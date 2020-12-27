@@ -10,22 +10,22 @@ class MockMessage:
         return self._text
 
 
-class MockServicePut:
+class MockService:
     def __init__(self, msgs):
         self._msgs = msgs
 
-    def start(self, bot):
+    def start_msg_stream(self, bot):
         for msg in self._msgs:
-            bot.put_msg(msg)
+            bot.handle(msg=msg)
 
 
-class MockServiceHandle:
+class MockServiceBackground:
     def __init__(self, msgs):
         self._msgs = msgs
 
-    def start(self, bot):
+    def start_msg_stream(self, bot):
         for msg in self._msgs:
-            bot.handle_msg(msg)
+            bot.handle_background(msg=msg)
 
 
 class MockApp:
@@ -36,14 +36,14 @@ class MockApp:
         self.accepted_msg.append(msg)
 
 
-def test_controller_put():
+def test_controller():
     msgs = [
         MockMessage(text="1"),
         MockMessage(text="2"),
         MockMessage(text="3"),
     ]
 
-    svc = MockServicePut(msgs=msgs)
+    svc = MockService(msgs=msgs)
     app = MockApp()
     controller = Bot(service=svc, post_service=svc, app=app)
 
@@ -52,14 +52,14 @@ def test_controller_put():
     assert app.accepted_msg == msgs
 
 
-def test_controller_handle():
+def test_controller_background():
     msgs = [
         MockMessage(text="1"),
         MockMessage(text="2"),
         MockMessage(text="3"),
     ]
 
-    svc = MockServiceHandle(msgs=msgs)
+    svc = MockServiceBackground(msgs=msgs)
     app = MockApp()
     controller = Bot(service=svc, post_service=svc, app=app)
 
