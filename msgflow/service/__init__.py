@@ -1,4 +1,5 @@
 from .cli_service import CliService
+from .webapi_service import WebapiService
 from .twitter_service import TwitterSampleStreamService
 from .twitter_mentions_timeline_service import TwitterMentionsTimelineService
 from .slack_service import SlackService

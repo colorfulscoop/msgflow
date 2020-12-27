@@ -2,7 +2,7 @@ import os
 from .config import load_yaml
 from .content import INIT_CONFIG
 from .content import INIT_APP
-from .controller import Controller
+from .controller import Bot
 from .protocol import Service
 from .protocol import App
 from .logging import print_json_log
@@ -46,10 +46,10 @@ def build_post_service(yaml_dic: dict[str, str], service: Service) -> Service:
         return service
 
 
-def build_app(yaml_dic: dict[str, str], post_service: Service) -> App:
+def build_app(yaml_dic: dict[str, str]) -> App:
     cls, config = load_class_and_config(yaml_dic, "app")
-    service = cls(service=post_service, config=config)
-    return service
+    app = cls(config=config)
+    return app
 
 
 class Main:
@@ -82,10 +82,10 @@ class Main:
         )
 
         # Build app
-        app: App = build_app(yaml_dic=yaml_dic, post_service=post_service)
+        app: App = build_app(yaml_dic=yaml_dic)
 
         # Build controller and start
-        controller = Controller(service, app)
+        controller = Bot(service=service, post_service=post_service, app=app)
         controller.start()
 
 
