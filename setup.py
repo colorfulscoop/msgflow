@@ -15,6 +15,6 @@ setuptools.setup(
         "twitter": ["python-twitter==3.5"],
         "slack": ["slackclient==1.2.1"],
     },
-    version="0.2.1",
+    version="0.3.0",
     author="Noriyuki Abe",
 )
