@@ -25,7 +25,7 @@ class MockServiceBackground:
 
     def flow(self, bot):
         for msg in self._msgs:
-            bot.handle_background(msg=msg)
+            bot.handle(msg=msg, background=True)
 
 
 class MockApp:

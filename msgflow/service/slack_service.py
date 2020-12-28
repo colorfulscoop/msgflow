@@ -72,7 +72,7 @@ class SlackService:
                         api=self._api,
                         config=self._config,
                     )
-                    bot.handle_background(msg)
+                    bot.handle(msg, background=True)
 
                 time.sleep(1)
             except slackclient.server.SlackConnectionError:

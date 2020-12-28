@@ -76,7 +76,7 @@ class TwitterSampleStreamService:
                         )
                     )
                     if cond:
-                        bot.handle_background(TwitterMessage(status=status))
+                        bot.handle(TwitterMessage(status=status), background=True)
                         need_sleep = True
 
                     if need_sleep:

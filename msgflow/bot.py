@@ -67,8 +67,8 @@ class Bot:
         self._post_service.post(text=text)
 
     # Following methods are used in services
-    def handle(self, msg: Message):
-        self._app.handle(bot=self, msg=msg)
-
-    def handle_background(self, msg: Message):
-        self._queue.put(msg)
+    def handle(self, msg: Message, background: bool = False):
+        if background:
+            self._queue.put(msg)
+        else:
+            self._app.handle(bot=self, msg=msg)

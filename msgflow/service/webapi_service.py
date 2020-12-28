@@ -29,7 +29,7 @@ class Handler:
 
     def handle(self, req: Request):
         msg = WebapiMessage(text=req.text, conversation_id=req.conversation_id)
-        self._bot.handle_background(msg)
+        self._bot.handle(msg)
         return Response(texts=msg.msgs, request=req)
 
 

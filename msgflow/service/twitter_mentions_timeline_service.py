@@ -93,7 +93,9 @@ class TwitterMentionsTimelineService:
                 logger.info(
                     f"Get mention: user=@{status.user.screen_name}, status={status.text}"
                 )
-                bot.handle_background(TwitterMessage(api=self._api, status=status))
+                bot.handle(
+                    TwitterMessage(api=self._api, status=status), background=True
+                )
 
             # update since_id
             if mentions:
