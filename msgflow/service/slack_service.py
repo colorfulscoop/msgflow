@@ -40,7 +40,7 @@ class SlackService:
         self._config = config
         self._api = api
 
-    def get_stream(self):
+    def flow(self, bot):
         connection_established = False
 
         while True:
@@ -66,12 +66,14 @@ class SlackService:
 
                     text = text.replace(f"<@{bot_user}>", "")
 
-                    yield SlackMessage(
+                    msg = SlackMessage(
                         text=text,
                         user=user,
                         api=self._api,
                         config=self._config,
                     )
+                    bot.handle(msg, background=True)
+
                 time.sleep(1)
             except slackclient.server.SlackConnectionError:
                 logging.info(

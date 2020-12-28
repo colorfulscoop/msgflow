@@ -14,20 +14,32 @@ class Message(Protocol):
         raise NotImplementedError()
 
 
-class Service(Protocol):
-    def __init__(self, config: dict[str, str]):
+class App(Protocol):
+    """Protoocl for App.
+
+    To initialize App with config defined in YAML configu file,
+    the following initializer.
+
+        def __init__(self, config: dict[str, str]):
+            raise NotImplementedError()
+    """
+
+    def handle(self, bot, msg: Message):
         raise NotImplementedError()
 
-    def get_stream(self) -> list[Message]:
+
+class Service(Protocol):
+    """Protoocl for Service.
+
+    To initialize Service with config defined in YAML configu file,
+    you need to implement the following initializer.
+
+        def __init__(self, config: dict[str, str]):
+            raise NotImplementedError()
+    """
+
+    def flow(self, bot) -> None:
         raise NotImplementedError()
 
     def post(self, text) -> None:
-        raise NotImplementedError()
-
-
-class App(Protocol):
-    def __init__(self, service: Service, config: dict[str, str]):
-        raise NotImplementedError()
-
-    def handle(self, message: Message):
         raise NotImplementedError()

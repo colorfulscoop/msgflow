@@ -2,9 +2,10 @@ import os
 from .config import load_yaml
 from .content import INIT_CONFIG
 from .content import INIT_APP
-from .controller import Controller
+from .bot import Bot
 from .protocol import Service
 from .protocol import App
+from .logging import print_json_log
 import logging
 
 logger = logging.getLogger(__file__)
@@ -35,17 +36,20 @@ def build_post_service(yaml_dic: dict[str, str], service: Service) -> Service:
         cls, config = load_class_and_config(yaml_dic, "post_service")
         return cls(config)
     else:
-        logger.info(
-            '"post_service" is not defined in config file. '
-            '"service" is used for "post_service" instead.'
+        print_json_log(
+            logger,
+            "debug",
+            "`post_service` is not defined in config file. "
+            "`service` is used for `post_service` instead.",
         )
+
         return service
 
 
-def build_app(yaml_dic: dict[str, str], post_service: Service) -> App:
+def build_app(yaml_dic: dict[str, str]) -> App:
     cls, config = load_class_and_config(yaml_dic, "app")
-    service = cls(service=post_service, config=config)
-    return service
+    app = cls(config=config)
+    return app
 
 
 class Main:
@@ -57,9 +61,9 @@ class Main:
         with open(app_path, "w") as fd:
             fd.write(INIT_APP)
 
-    def run(self, config_file: str):
+    def run(self, config_file: str, verbose: bool = False):
         # Set logging
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
 
         # Load config file
         yaml_dic = load_yaml(config_file)
@@ -68,15 +72,21 @@ class Main:
         service: Service = build_service(yaml_dic)
         post_service: Service = build_post_service(yaml_dic, service=service)
 
-        logger.info(f"service: {service.__class__.__name__}")
-        logger.info(f"post_service: {post_service.__class__.__name__}")
+        print_json_log(
+            logger,
+            "info",
+            {
+                "service": service.__class__.__name__,
+                "post_service": post_service.__class__.__name__,
+            },
+        )
 
         # Build app
-        app: App = build_app(yaml_dic=yaml_dic, post_service=post_service)
+        app: App = build_app(yaml_dic=yaml_dic)
 
         # Build controller and start
-        controller = Controller(service, app)
-        controller.start_handle()
+        bot = Bot(service=service, post_service=post_service, app=app)
+        bot.start()
 
 
 if __name__ == "__main__":

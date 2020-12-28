@@ -45,7 +45,7 @@ class TwitterSampleStreamService:
         self._config = config
         self._api = api
 
-    def get_stream(self):
+    def flow(self, bot):
         while True:
             try:
                 need_sleep = False
@@ -76,7 +76,7 @@ class TwitterSampleStreamService:
                         )
                     )
                     if cond:
-                        yield TwitterMessage(status=status)
+                        bot.handle(TwitterMessage(status=status), background=True)
                         need_sleep = True
 
                     if need_sleep:

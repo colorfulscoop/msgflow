@@ -35,17 +35,16 @@ class CliService:
         self._in_fd = sys.stdin
         self._out_fd = sys.stdout
 
-    def get_stream(self):
+    def flow(self, bot):
         while True:
             try:
                 text = input(f"{self._config.user_name}> ")
+                msg = CliMessage(text=text, user_name=self._config.user_name)
+                bot.handle(msg)
             except (EOFError, KeyboardInterrupt):
                 # When user inputs EOF (<CTRL>-D), saye hello good bye and exit stream
-                print("")
                 print("Bye!")
                 return
-
-            yield CliMessage(text=text, user_name=self._config.user_name)
 
     def post(self, text):
         print(text, file=self._out_fd)
