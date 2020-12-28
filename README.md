@@ -6,10 +6,16 @@
 
 ## Installation
 
-Prepare Python >= 3.9. Then install msgFlow from GitHub.
+Prepare Python >= 3.9. Then install msgFlow from PyPI.
 
 ```sh
-$ pip install git+https://github.com/noriyukipy/msgflow
+$ pip install msgflow
+```
+
+msgFlow separas dependent libraries for each service. To make all the services available, install msgFlow with the following options.
+
+```sh
+$ pip install -e msgflow[webapi,twitter,slack]
 ```
 
 ## Quick Start
@@ -40,10 +46,7 @@ You can utilize the `run` command with `--config_file` option which specify the 
 
 ```sh
 $ python -m msgflow.main run --config_file config.yml
-INFO:/usr/local/lib/python3.9/site-packages/msgflow/main.py:"post_service" is not defined in config file. "service" is used for "post_service" instead.
-INFO:/usr/local/lib/python3.9/site-packages/msgflow/main.py:service: CliService
-INFO:/usr/local/lib/python3.9/site-packages/msgflow/main.py:post_service: CliService
-you>
+INFO:/work/msgflow/main.py:{"level": "info", "message": {"service": "CliService", "post_service": "CliService"}, "time": "2020-12-26 11:10:43.886375"}
 ```
 
 The prompt `you>` waits for your input. Input your utterance there.
@@ -62,15 +65,15 @@ The default App class shows the message that what kind of message was reached, a
 To finish the conversation, input `<Ctr-D>` or `<Ctr-C>`.
 
 ```sh
-you>
-Bye!
+you> Bye!
 ```
 
 ## Service
 
-| Name | Description | Stream | Post | Respond to message |
-| --- | --- | --- | --- | --- |
-| msgflow.service.CliService | CLI service to work with stdin and stdout | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| msgflow.service.SlackService | Slack service to work with Slack | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| msgflow.service.TwitterSampleStreamService | [Twitter sample stream](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/get_statuses_sample) service to get messages from sample stream | :white_check_mark: | :x: | :x: |
-| msgflow.service.TwitterMentionsTimeline | [Twitter mentions timeline](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-mentions_timeline) service to get messages from mentions timeline | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Name | Description | Flow message | Post | Respond to message | Where to handle message |
+| --- | --- | --- | --- | --- | --- |
+| msgflow.service.CliService | Service to get input from stdin and output to stdout | Available | Available | Available | Foreground |
+| msgflow.service.WebapiService | Service to service web API | Available | Unavailable | Available  | Foreground |
+| msgflow.service.SlackService | Service to work with Slack | Available | Available | Available | Background |
+| msgflow.service.TwitterSampleStreamService | Service to get message from [Twitter sample stream](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/get_statuses_sample) | Available | Unavailable | Unavailable | Background |
+| msgflow.service.TwitterMentionsTimeline | Service to get message from [Twitter mentions timeline](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-mentions_timeline) | Available | Available | Available | Background |
