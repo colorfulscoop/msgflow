@@ -45,7 +45,7 @@ class TwitterSampleStreamService:
         self._config = config
         self._api = api
 
-    def start_msg_stream(self, bot):
+    def flow(self, bot):
         while True:
             try:
                 need_sleep = False

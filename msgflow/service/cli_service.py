@@ -35,7 +35,7 @@ class CliService:
         self._in_fd = sys.stdin
         self._out_fd = sys.stdout
 
-    def start_msg_stream(self, bot):
+    def flow(self, bot):
         while True:
             try:
                 text = input(f"{self._config.user_name}> ")

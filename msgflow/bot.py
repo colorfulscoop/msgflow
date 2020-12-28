@@ -16,7 +16,7 @@ class _ProducerClose:
 def _craete_producer_thread(bot):
     def run():
         # service will return None when it finishes providing messages.
-        _ = bot._service.start_msg_stream(bot)
+        _ = bot._service.flow(bot)
         bot._queue.put(_ProducerClose())
         print_json_log(logger, "debug", "Finish producer thread")
 

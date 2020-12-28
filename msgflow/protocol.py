@@ -38,7 +38,7 @@ class Service(Protocol):
             raise NotImplementedError()
     """
 
-    def start_msg_stream(self, bot) -> None:
+    def flow(self, bot) -> None:
         raise NotImplementedError()
 
     def post(self, text) -> None:

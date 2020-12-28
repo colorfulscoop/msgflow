@@ -66,7 +66,7 @@ class WebapiService:
         # Set attributes
         self._config = WebapiConfig(**config)
 
-    def start_msg_stream(self, bot):
+    def flow(self, bot):
         handler = Handler(bot=bot)
         app = build_api(handler)
         uvicorn.run(app=app, host=self._config.host, port=self._config.port)

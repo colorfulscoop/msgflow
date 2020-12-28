@@ -40,7 +40,7 @@ class SlackService:
         self._config = config
         self._api = api
 
-    def start_msg_stream(self, bot):
+    def flow(self, bot):
         connection_established = False
 
         while True:

@@ -14,7 +14,7 @@ class MockService:
     def __init__(self, msgs):
         self._msgs = msgs
 
-    def start_msg_stream(self, bot):
+    def flow(self, bot):
         for msg in self._msgs:
             bot.handle(msg=msg)
 
@@ -23,7 +23,7 @@ class MockServiceBackground:
     def __init__(self, msgs):
         self._msgs = msgs
 
-    def start_msg_stream(self, bot):
+    def flow(self, bot):
         for msg in self._msgs:
             bot.handle_background(msg=msg)
 

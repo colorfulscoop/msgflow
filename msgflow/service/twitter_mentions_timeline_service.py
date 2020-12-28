@@ -63,7 +63,7 @@ class TwitterMentionsTimelineService:
         self._config = config
         self._api = api
 
-    def start_msg_stream(self, bot):
+    def flow(self, bot):
         since_id = 1
 
         # Set the initial since_id
