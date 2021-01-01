@@ -22,8 +22,12 @@ class CliMessage:
         print(fmt)
 
 
+class CliConfig(BaseModel):
+    user_name: str = "you"
+
+
 class CliService:
-    def __init__(self, config):
+    def __init__(self, config: CliConfig, in_fd, out_fd):
         """
         Args:
             config (Dict[str, Any])
@@ -31,9 +35,13 @@ class CliService:
             out_fd (Any)
         """
         # Set attributes
-        self._config = CliConfig(**config)
-        self._in_fd = sys.stdin
-        self._out_fd = sys.stdout
+        self._config = config
+        self._in_fd = in_fd
+        self._out_fd = out_fd
+
+    @classmethod
+    def from_config(cls, config: dict[str, object]):
+        return cls(config=CliConfig(**config), in_fd=sys.stdin, out_fd=sys.stdout)
 
     def flow(self, bot):
         while True:
@@ -48,7 +56,3 @@ class CliService:
 
     def post(self, text):
         print(text, file=self._out_fd)
-
-
-class CliConfig(BaseModel):
-    user_name: str = "you"

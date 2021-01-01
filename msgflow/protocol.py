@@ -15,28 +15,24 @@ class Message(Protocol):
 
 
 class App(Protocol):
-    """Protoocl for App.
-
-    To initialize App with config defined in YAML configu file,
-    the following initializer.
-
-        def __init__(self, config: dict[str, str]):
-            raise NotImplementedError()
-    """
+    @classmethod
+    def from_config(cls, config: dict[str, object]):
+        """
+        To initialize App with config defined in YAML configu file,
+        the following initializer.
+        """
+        raise NotImplementedError()
 
     def handle(self, bot, msg: Message):
         raise NotImplementedError()
 
 
 class Service(Protocol):
-    """Protoocl for Service.
+    """Protoocl for Service."""
 
-    To initialize Service with config defined in YAML configu file,
-    you need to implement the following initializer.
-
-        def __init__(self, config: dict[str, str]):
-            raise NotImplementedError()
-    """
+    @classmethod
+    def from_config(cls, config: dict[str, object]):
+        raise NotImplementedError()
 
     def flow(self, bot) -> None:
         raise NotImplementedError()
