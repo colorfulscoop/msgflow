@@ -15,6 +15,23 @@ setuptools.setup(
         "twitter": ["python-twitter==3.5"],
         "slack": ["slackclient==1.2.1"],
     },
-    version="0.3.0",
+    version="0.4.0",
     author="Noriyuki Abe",
+
+    # Description info
+    url="https://github.com/colorfulscoop/msgflow",
+    description=(
+        "msgFlow is a simple chatbot framework"
+        " for simple configuration, customization"
+        " and connection with several services."
+    ),
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+
+    # Additional metadata
+    classifiers=[
+        "Programming Language :: Python :: 3.9",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ]
 )

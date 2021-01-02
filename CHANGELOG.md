@@ -6,15 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.4.0] - 2021-01-02
+
+### Changed
+
+- Service interface to add `from_config` for initializing the object from config dictionary https://github.com/colorfulscoop/msgflow/pull/14
+
 ## [v0.3.0] - 2020-12-29
 
 ### Added
 
-- Add CI for github actions https://github.com/colorfulscoop/msgflow/pull/6
-- Add code style check https://github.com/colorfulscoop/msgflow/pull/7
-- Add protocol to define interface https://github.com/colorfulscoop/msgflow/pull/8
-- Add ContextMemory to keep track of conversations https://github.com/colorfulscoop/msgflow/pull/9
-- Add queue based handler execution in background https://github.com/colorfulscoop/msgflow/pull/12
+- CI for github actions https://github.com/colorfulscoop/msgflow/pull/6
+- Code style check https://github.com/colorfulscoop/msgflow/pull/7
+- Protocol to define interface https://github.com/colorfulscoop/msgflow/pull/8
+- ContextMemory to keep track of conversations https://github.com/colorfulscoop/msgflow/pull/9
+- Queue based handler execution in background https://github.com/colorfulscoop/msgflow/pull/12
 
 ### Changed
 
@@ -28,8 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fix slack service which process to deal with messages without any suspending time
-- Fix Twitter mention timeline service to add exception statement to connect to Twitter https://github.com/noriyukipy/msgflow/pull/4
+- Slack service which process to deal with messages without any suspending time
+- Twitter mention timeline service to add exception statement to connect to Twitter https://github.com/noriyukipy/msgflow/pull/4
 
 ## [0.2.0] - 2020-08-17
 

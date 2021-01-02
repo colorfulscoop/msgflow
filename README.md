@@ -1,8 +1,8 @@
 # msgFlow
 
-![](https://github.com/noriyukipy/msgflow/workflows/unittest/badge.svg)
+![](https://github.com/colorfulscoop/msgflow/workflows/unittest/badge.svg)
 
-[msgFlow](https://github.com/noriyukipy/msgflow) is a simple chatbot framework written in Python for simple configuration, customization and connection with several services.
+[msgFlow](https://github.com/colorfulscoop/msgflow) is a simple chatbot framework written in Python for simple configuration, customization and connection with several services.
 
 ## Installation
 
@@ -62,10 +62,11 @@ bot> Thank you for your message "World"!
 
 The default App class shows the message that what kind of message was reached, and then return the response with your input utterance.
 
-To finish the conversation, input `<Ctr-D>` or `<Ctr-C>`.
+To finish the conversation, input `/exit`.
 
 ```sh
-you> Bye!
+you> /exit
+Bye!
 ```
 
 ## Service
