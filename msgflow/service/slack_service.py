@@ -32,13 +32,18 @@ class SlackMessage:
 
 
 class SlackService:
-    def __init__(self, config, api_cls=slackclient.SlackClient):
-        config = SlackConfig(**config)
-        api = api_cls(
-            token=config.slack_api_token,
-        )
+    def __init__(self, config, api):
+        config = config
         self._config = config
         self._api = api
+
+    @classmethod
+    def from_config(cls, config: dict[str, object]):
+        cfg = SlackConfig(**config)
+        api = slackclient.SlackClient(
+            token=cfg.slack_api_token,
+        )
+        return cls(config=cfg, api=api)
 
     def flow(self, bot):
         connection_established = False
