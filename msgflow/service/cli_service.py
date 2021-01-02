@@ -3,10 +3,11 @@ from pydantic import BaseModel
 
 
 class CliMessage:
-    def __init__(self, text: str, user_name: str):
+    def __init__(self, text: str, user_name: str, out_fd):
         """"""
         self._text = text
         self._user_name = user_name
+        self._out_fd = out_fd
 
     @property
     def text(self):
@@ -19,7 +20,7 @@ class CliMessage:
 
     def respond(self, text):
         fmt = f"bot> {text}"
-        print(fmt)
+        print(fmt, file=self._out_fd)
 
 
 class CliConfig(BaseModel):
@@ -43,16 +44,26 @@ class CliService:
     def from_config(cls, config: dict[str, object]):
         return cls(config=CliConfig(**config), in_fd=sys.stdin, out_fd=sys.stdout)
 
+    def _show_prompt(self, user_name, out_fd):
+        print(f"{user_name}> ", end="", file=out_fd)
+        out_fd.flush()
+
     def flow(self, bot):
-        while True:
-            try:
-                text = input(f"{self._config.user_name}> ")
-                msg = CliMessage(text=text, user_name=self._config.user_name)
-                bot.handle(msg)
-            except (EOFError, KeyboardInterrupt):
-                # When user inputs EOF (<CTRL>-D), saye hello good bye and exit stream
-                print("Bye!")
-                return
+        self._show_prompt(self._config.user_name, self._out_fd)
+        for line in self._in_fd:
+            text = line.rstrip("\n")
+
+            if text == "/exit":
+                break
+
+            msg = CliMessage(
+                text=text, user_name=self._config.user_name, out_fd=self._out_fd
+            )
+            bot.handle(msg)
+            self._show_prompt(self._config.user_name, self._out_fd)
+
+        # print("", file=self._out_fd)
+        print("Bye!", file=self._out_fd)
 
     def post(self, text):
         print(text, file=self._out_fd)
