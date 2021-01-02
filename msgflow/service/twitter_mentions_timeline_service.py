@@ -51,17 +51,20 @@ class TwitterMessage:
 
 
 class TwitterMentionsTimelineService:
-    def __init__(self, config, api_cls=twitter.Api):
-        config = TwitterConfig(**config)
-        api = api_cls(
+    def __init__(self, config, api):
+        self._config = config
+        self._api = api
+
+    @classmethod
+    def from_config(cls, config: dict[str, object]):
+        cfg = TwitterConfig(**config)
+        api = twitter.Api(
             consumer_key=config.consumer_key,
             consumer_secret=config.consumer_secret,
             access_token_key=config.access_token_key,
             access_token_secret=config.access_token_secret,
         )
-
-        self._config = config
-        self._api = api
+        return cls(config=cfg, api=api)
 
     def flow(self, bot):
         since_id = 1
