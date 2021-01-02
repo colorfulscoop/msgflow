@@ -21,4 +21,4 @@ jobs:
           echo Hello | python -m msgflow.main run --config_file=config.yml
           cd ..
       - name: Check code style
-        run: black --check msgflow
+        run: black --check msgflow tests

@@ -45,7 +45,11 @@ def test_CliService():
     cron_format = "* * * * * */2"  # Run every 2 seconds
     sleeper = MockSleeper()
     dt = MockDatetime([datetime.datetime(2021, 1, 1, 0, 0, i) for i in range(59)])
-    svc = CronService(config=CronConfig(cron_format=cron_format, sleep_interval=1, num_max_exec=3), sleep_func=sleeper.sleep, now_func=dt.now)
+    svc = CronService(
+        config=CronConfig(cron_format=cron_format, sleep_interval=1, num_max_exec=3),
+        sleep_func=sleeper.sleep,
+        now_func=dt.now,
+    )
     post_svc = MockPostService()
     bot = Bot(service=svc, post_service=post_svc, app=app)
 
@@ -55,7 +59,7 @@ def test_CliService():
     # Assert output
     assert sleeper.record == [1, 1, 1]
     assert post_svc.record == [
-        '2021-01-01 00:00:02',
-        '2021-01-01 00:00:04',
-        '2021-01-01 00:00:06',
+        "2021-01-01 00:00:02",
+        "2021-01-01 00:00:04",
+        "2021-01-01 00:00:06",
     ]
