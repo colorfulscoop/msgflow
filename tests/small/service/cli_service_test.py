@@ -20,11 +20,7 @@ def test_CliService():
     app = MockApp()
     in_fd = io.StringIO("1\n2\n3\n/exit\n")
     out_fd = io.StringIO()
-    svc = CliService(
-        config=CliConfig(user_name="you"),
-        in_fd=in_fd,
-        out_fd=out_fd
-    )
+    svc = CliService(config=CliConfig(user_name="you"), in_fd=in_fd, out_fd=out_fd)
     bot = Bot(service=svc, post_service=svc, app=app)
 
     # Start bot

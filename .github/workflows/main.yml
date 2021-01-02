@@ -9,7 +9,7 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: pip install .[test]
+        run: pip install .[test,cron]
       - name: Run small size tests
         run: |
           pytest -v tests/small
@@ -21,4 +21,4 @@ jobs:
           echo Hello | python -m msgflow.main run --config_file=config.yml
           cd ..
       - name: Check code style
-        run: black --check msgflow
+        run: black --check msgflow tests

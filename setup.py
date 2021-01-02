@@ -14,6 +14,7 @@ setuptools.setup(
         "webapi": ["fastapi~=0.63.0", "uvicorn~=0.13.0"],
         "twitter": ["python-twitter==3.5"],
         "slack": ["slackclient==1.2.1"],
+        "cron": ["croniter==0.3.37"]
     },
     version="0.4.0",
     author="Noriyuki Abe",

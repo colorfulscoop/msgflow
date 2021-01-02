@@ -17,8 +17,8 @@ service:
     """
     want = {
         "service": {
-          "name": "msgflow.service.CliService",
-          "config": {"user_name": "you"},
+            "name": "msgflow.service.CliService",
+            "config": {"user_name": "you"},
         }
     }
     with tempfile.NamedTemporaryFile(mode="w+") as fp:
@@ -42,14 +42,10 @@ service:
     os.environ["USER_NAME"] = "name_from_env"
     os.environ["PASSWORD"] = "password_from_env"
 
-
     want = {
         "service": {
             "name": "msgflow.service.CliService",
-            "config": {
-                "user_name": "name_from_env",
-                "password": "password_from_env"
-            },
+            "config": {"user_name": "name_from_env", "password": "password_from_env"},
         }
     }
     with tempfile.NamedTemporaryFile(mode="w+") as fp:
@@ -76,15 +72,12 @@ service:
     # Set environment variable
     os.environ["USER_NAME"] = "name_from_env"
     # Not define PASSWORD env var
-    #os.environ["PASSWORD"] = "password_from_env"
+    # os.environ["PASSWORD"] = "password_from_env"
 
     want = {
         "service": {
             "name": "msgflow.service.CliService",
-            "config": {
-                "user_name": "name_from_env",
-                "password": "${PASSWORD}"
-            },
+            "config": {"user_name": "name_from_env", "password": "${PASSWORD}"},
         }
     }
     with tempfile.NamedTemporaryFile(mode="w+") as fp:
