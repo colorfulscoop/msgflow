@@ -26,7 +26,7 @@ def load_class_and_config(yaml_dic: dict[str, str], key: str):
 
 def build_service(yaml_dic: dict[str, str]) -> Service:
     cls, config = load_class_and_config(yaml_dic, "service")
-    service = cls(config)
+    service = cls.from_config(config)
     return service
 
 
@@ -34,7 +34,7 @@ def build_post_service(yaml_dic: dict[str, str], service: Service) -> Service:
     key = "post_service"
     if key in yaml_dic:
         cls, config = load_class_and_config(yaml_dic, "post_service")
-        return cls(config)
+        return cls.from_config(config)
     else:
         print_json_log(
             logger,
@@ -48,7 +48,7 @@ def build_post_service(yaml_dic: dict[str, str], service: Service) -> Service:
 
 def build_app(yaml_dic: dict[str, str]) -> App:
     cls, config = load_class_and_config(yaml_dic, "app")
-    app = cls(config=config)
+    app = cls.from_config(config=config)
     return app
 
 

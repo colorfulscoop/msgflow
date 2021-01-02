@@ -64,7 +64,12 @@ class WebapiService:
             config (Dict[str, Any])
         """
         # Set attributes
-        self._config = WebapiConfig(**config)
+        self._config = config
+
+    @classmethod
+    def from_config(cls, config: dict[str, object]):
+        cfg = WebapiConfig(**config)
+        return cls(config=cfg)
 
     def flow(self, bot):
         handler = Handler(bot=bot)

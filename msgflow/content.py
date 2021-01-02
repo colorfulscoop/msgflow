@@ -55,8 +55,12 @@ app:
 
 INIT_APP = """
 class MyApp:
-    def __init__(self, config):
+    def __init__(self):
         pass
+
+    @classmethod
+    def from_config(cls, config: dict[str, object]):
+        return cls()
 
     def handle(self, bot, msg):
         log_msg = f'App got message: Message(text="{msg.text}", conversation_id="{msg.conversation_id}")'
