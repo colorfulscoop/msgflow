@@ -62,10 +62,11 @@ bot> Thank you for your message "World"!
 
 The default App class shows the message that what kind of message was reached, and then return the response with your input utterance.
 
-To finish the conversation, input `<Ctr-D>` or `<Ctr-C>`.
+To finish the conversation, input `/exit`.
 
 ```sh
-you> Bye!
+you> /exit
+Bye!
 ```
 
 ## Service
