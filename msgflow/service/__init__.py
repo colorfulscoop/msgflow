@@ -19,3 +19,8 @@ try:
     from .slack_service import SlackService
 except ImportError:
     pass
+
+try:
+    from .cron_service import CronService
+except ImportError:
+    pass
