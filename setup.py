@@ -16,7 +16,7 @@ setuptools.setup(
         "slack": ["slackclient==1.2.1"],
         "cron": ["croniter==0.3.37"]
     },
-    version="0.4.0",
+    version="0.5.0",
     author="Noriyuki Abe",
 
     # Description info
