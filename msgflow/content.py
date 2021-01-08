@@ -63,7 +63,7 @@ class MyApp:
         return cls()
 
     def handle(self, bot, msg):
-        log_msg = f'App got message: Message(text="{msg.text}", conversation_id="{msg.conversation_id}")'
+        log_msg = f'App got message: Message(text="{msg.text}", dialog_id="{msg.dialog_id}")'
         bot.post(log_msg)
         msg.respond(f'Thank you for your message "{msg.text}"!')
 """
