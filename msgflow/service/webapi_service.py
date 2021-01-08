@@ -1,13 +1,23 @@
 from pydantic import BaseModel
 from fastapi import FastAPI
 import uvicorn
+import pkg_resources
 
 
 def build_api(handler):
+    def get_version():
+        pkg_name = "msgflow"
+        try:
+            version = pkg_resources.get_distribution(pkg_name).version
+        except pkg_resources.DistributionNotFound:
+            print(f"Package name not found: {pkg_name}")
+            version = "package version info not found"
+        return version
+
     app = FastAPI(
         title="msgFlow",
         description="",
-        version="0.0.0",
+        version=get_version(),
     )
     app.add_api_route("/handle", handler.handle, methods=["POST"])
     return app
@@ -15,7 +25,7 @@ def build_api(handler):
 
 class Request(BaseModel):
     text: str
-    conversation_id: str = 0
+    dialog_id: str = 0
 
 
 class Response(BaseModel):
@@ -28,16 +38,16 @@ class Handler:
         self._bot = bot
 
     def handle(self, req: Request):
-        msg = WebapiMessage(text=req.text, conversation_id=req.conversation_id)
+        msg = WebapiMessage(text=req.text, dialog_id=req.dialog_id)
         self._bot.handle(msg)
         return Response(texts=msg.msgs, request=req)
 
 
 class WebapiMessage:
-    def __init__(self, text: str, conversation_id: str):
+    def __init__(self, text: str, dialog_id: str):
         """"""
         self._text = text
-        self._cid = conversation_id
+        self._cid = dialog_id
         self._msgs = []
 
     @property
@@ -45,7 +55,7 @@ class WebapiMessage:
         return self._text
 
     @property
-    def conversation_id(self) -> str:
+    def dialog_id(self) -> str:
         # In CliService, a conversation is identified by the user's name
         return self._cid
 

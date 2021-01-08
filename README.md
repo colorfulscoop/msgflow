@@ -53,10 +53,10 @@ The prompt `you>` waits for your input. Input your utterance there.
 
 ```sh
 you> Hello
-App got message: Message(text="Hello", conversation_id="you")
+App got message: Message(text="Hello", dialog_id="you")
 bot> Thank you for your message "Hello"!
 you> World
-App got message: Message(text="World", conversation_id="you")
+App got message: Message(text="World", dialog_id="you")
 bot> Thank you for your message "World"!
 ```
 

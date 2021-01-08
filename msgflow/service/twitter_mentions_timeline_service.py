@@ -36,7 +36,7 @@ class TwitterMessage:
         return text
 
     @property
-    def conversation_id(self) -> str:
+    def dialog_id(self) -> str:
         return self._status.user.screen_name
 
     def respond(self, text):

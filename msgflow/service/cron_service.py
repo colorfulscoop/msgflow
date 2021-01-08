@@ -14,7 +14,7 @@ class CronMessage:
         return self._text
 
     @property
-    def conversation_id(self) -> str:
+    def dialog_id(self) -> str:
         # In CliService, a conversation is identified by the user's name
         return self._text
 

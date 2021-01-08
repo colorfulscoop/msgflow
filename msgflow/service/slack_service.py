@@ -19,7 +19,7 @@ class SlackMessage:
         return self._text
 
     @property
-    def conversation_id(self) -> str:
+    def dialog_id(self) -> str:
         return self._user
 
     def respond(self, text):
