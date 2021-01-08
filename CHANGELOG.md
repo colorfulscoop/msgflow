@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.5.0] - 2021-01-09
+
+### Added
+
+- CronService https://github.com/colorfulscoop/msgflow/pull/16
+
+### Changed
+
+- `conversation_id` to `dialog_id` https://github.com/colorfulscoop/msgflow/pull/17
+
 ## [v0.4.0] - 2021-01-02
 
 ### Changed
