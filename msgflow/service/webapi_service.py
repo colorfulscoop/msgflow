@@ -1,13 +1,23 @@
 from pydantic import BaseModel
 from fastapi import FastAPI
 import uvicorn
+import pkg_resources
 
 
 def build_api(handler):
+    def get_version():
+        pkg_name = "msgflow"
+        try:
+            version = pkg_resources.get_distribution(pkg_name).version
+        except pkg_resources.DistributionNotFound:
+            print(f"Package name not found: {pkg_name}")
+            version = "package version info not found"
+        return version
+
     app = FastAPI(
         title="msgFlow",
         description="",
-        version="0.0.0",
+        version=get_version(),
     )
     app.add_api_route("/handle", handler.handle, methods=["POST"])
     return app
