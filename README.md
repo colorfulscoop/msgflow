@@ -77,7 +77,6 @@ Bye!
 | msgflow.service.CronService | Service to post on a regular basis | :white_check_mark:  | | | Foreground |
 | msgflow.service.WebapiService | Service to serve web API | :white_check_mark: | | :white_check_mark:  | Foreground |
 | msgflow.service.SlackService | Service to work with Slack | :white_check_mark: | :white_check_mark: | :white_check_mark: | Background |
-| msgflow.service.TwitterSampleStreamService | Service to get message from [Twitter sample stream](https://developer.twitter.com/en/docs/tweets/sample-realtime/overview/get_statuses_sample) | :white_check_mark: | | | Background |
-| msgflow.service.TwitterMentionsTimeline | Service to get message from [Twitter mentions timeline](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-mentions_timeline) | :white_check_mark: | :white_check_mark: | :white_check_mark: | Background |
+| msgflow.service.TwitterSampleStreamService | This service gets tweets via [Twitter sampled stream v2](https://developer.twitter.com/en/docs/twitter-api/tweets/sampled-stream/api-reference/get-tweets-sample-stream) | :white_check_mark: | | | Background |
 
 :white_check_mark: : Available

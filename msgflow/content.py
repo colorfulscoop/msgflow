@@ -14,14 +14,11 @@ service:
 #    host: 0.0.0.0
 #    port: 8080
 
-# Twitter service
+# Twitter sample stream service
 #service:
 #  name: msgflow.service.TwitterSampleStreamService
 #  config:
-#    consumer_key: ""
-#    consumer_secret: ""
-#    access_token_key: ""
-#    access_token_secret: ""
+#    bearer_token: ""
 #    lang: ja
 #    max_len: 50
 #    interval: 10
