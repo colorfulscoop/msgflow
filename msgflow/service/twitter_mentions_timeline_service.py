@@ -1,12 +1,4 @@
-"""
-This module implements a service for Twitter mentions timeline.
-
-- Twitter API document: https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-mentions_timeline
-- Python Twitter document: https://python-twitter.readthedocs.io/en/latest/twitter.html?highlight=since_id#twitter.api.Api.GetMentions
-"""
-
 from pydantic import BaseModel
-import twitter
 import time
 import re
 import requests
@@ -15,11 +7,37 @@ import logging
 logger = logging.getLogger(__file__)
 
 
+class _TwitterApi:
+    def __init__(self, bearer_token):
+        self._bearer_token = bearer_token
+
+    def post_update(self, text, in_reply_to_status_id):
+        """This method will be implemented in the future once Twitter implements PostUpdate API in v2.
+        """
+
+    def get_mentions(self, user_id, since_id):
+        """
+
+        user_id can be found by querying
+
+            curl -X GET -H "Authorization: Bearer $BEARER_TOKEN" "https://api.twitter.com/2/users/by?usernames=your_user_name"
+
+        """
+        res = requests.get(
+            url=f"https://api.twitter.com/2/users/{user_id}/mentions",
+            params={
+                "since_id": since_id,
+            },
+            headers={
+                "Authorization": f"Bearer {self._bearer_token}"
+            }
+        )
+        return res.json()["data"]
+
+
 class TwitterConfig(BaseModel):
-    consumer_key: str
-    consumer_secret: str
-    access_token_key: str
-    access_token_secret: str
+    user_id: str  # Required to get mentions timeline
+    bearer_token: str
     interval: int = None
 
 
