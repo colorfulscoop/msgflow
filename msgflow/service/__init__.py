@@ -1,14 +1,9 @@
 from .cli_service import CliService
+from .twitter_service import TwitterSampleStreamService
+# from .twitter_mentions_timeline_service import TwitterMentionsTimelineService
 
 try:
     from .webapi_service import WebapiService
-except ImportError:
-    pass
-
-from .twitter_service import TwitterSampleStreamService
-
-try:
-    from .twitter_mentions_timeline_service import TwitterMentionsTimelineService
 except ImportError:
     pass
 
