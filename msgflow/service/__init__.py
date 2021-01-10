@@ -5,10 +5,7 @@ try:
 except ImportError:
     pass
 
-try:
-    from .twitter_service import TwitterSampleStreamService
-except ImportError:
-    pass
+from .twitter_service import TwitterSampleStreamService
 
 try:
     from .twitter_mentions_timeline_service import TwitterMentionsTimelineService

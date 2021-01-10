@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 from typing import List
-import twitter
-import time
 import requests
 import logging
+import json
+import datetime
 
 logging = logging.getLogger(__file__)
 
@@ -15,7 +15,6 @@ class TwitterMessage:
 
     @property
     def text(self):
-        return self._text
         return self._status["text"]
 
     @property
@@ -26,72 +25,103 @@ class TwitterMessage:
         raise NotImplementedError()
 
 
+class _TwitterApi:
+    def __init__(self, bearer_token):
+        self._bearer_token = bearer_token
+
+    def get_sample_stream(self):
+        try:
+            res = requests.get(
+                url="https://api.twitter.com/2/tweets/sample/stream",
+                headers={
+                    "Authorization": f"Bearer {self._bearer_token}"
+                },
+                stream=True
+            )
+
+            # Use iter_lines and decode_unicode to iterate streaming output
+            # Check the details in the document
+            # https://2.python-requests.org/projects/3/user/advanced/#streaming-requests
+            for item in res.iter_lines(decode_unicode=True):
+                # Output looks like
+                #  {"data": {"id": "...", "text": "..."}}
+                yield(json.loads(item)["data"])
+        except requests.exceptions.ChunkedEncodingError:
+            logging.info("Connection to Twitter was broken." "Reconnect again")
+
+
+class _SleepCondition:
+    def __init__(self):
+        self._start_at = datetime.datetime.now()
+        self._now = datetime.datetime.now()
+
+    def reset(self):
+        self._start_at = datetime.datetime.now()
+        self._now = datetime.datetime.now()
+
+    def step(self):
+        self._now = datetime.datetime.now()
+
+    def need_sleep(self, interval):
+        return self._now - self._start_at <= interval
+
+
 class TwitterSampleStreamService:
-    def __init__(self, config, api):
+    def __init__(self, config, api, sleep_cond):
         self._config = config
         self._api = api
+        self._sleep_cond = sleep_cond
 
     @classmethod
     def from_config(cls, config: dict[str, object]):
         cfg = TwitterConfig(**config)
-        api = twitter.Api(
-            consumer_key=cfg.consumer_key,
-            consumer_secret=cfg.consumer_secret,
-            access_token_key=cfg.access_token_key,
-            access_token_secret=cfg.access_token_secret,
-        )
-        return cls(config=cfg, api=api)
+        api = _TwitterApi(bearer_token=cfg.bearer_token)
+        return cls(config=cfg, api=api, sleep_cond=_SleepCondition())
 
     def flow(self, bot):
-        while True:
-            try:
-                need_sleep = False
-                for status in self._api.GetStreamSample():
-                    if "text" not in status:
-                        continue
+        self._sleep_cond.reset()
+        for status in self._api.get_sample_stream():
+            # Update sleep condition
+            self._sleep_cond.step()
 
-                    text = status["text"]
+            # Check sleep condition
+            if self._sleep_cond.need_sleep(self._config.interval):
+                continue
+            assert "text" in status
+            assert "lang" in status
 
-                    contains_black_words = False
-                    for bwd in self._config.black_words:
-                        if bwd in text:
-                            contains_black_words = True
-                            break
-                    if contains_black_words:
-                        continue
+            text = status["text"]
 
-                    cond = (
-                        # Check lang
-                        "lang" in status
-                        and self._config.lang
-                        and status["lang"] == self._config.lang
-                        and
-                        # Check max_len
-                        (
-                            (not self._config.max_len)
-                            or len(text) <= self._config.max_len
-                        )
-                    )
-                    if cond:
-                        bot.handle(TwitterMessage(status=status), background=True)
-                        need_sleep = True
+            # Check blackwords condition
+            contains_black_words = False
+            for bwd in self._config.black_words:
+                if bwd in text:
+                    contains_black_words = True
+                    break
+            if contains_black_words:
+                continue
 
-                    if need_sleep:
-                        time.sleep(self._config.interval)
-                        need_sleep = False
-
-            except requests.exceptions.ChunkedEncodingError:
-                logging.info("Connection to Twitter was broken." "Reconnect again")
+            cond = (
+                # Check lang
+                self._config.lang
+                and status["lang"] == self._config.lang
+                and
+                # Check max_len
+                (
+                    self._config.max_len
+                    and len(text) <= self._config.max_len
+                )
+            )
+            if cond:
+                bot.handle(TwitterMessage(status=status), background=True)
+                self._sleep_cond.reset()
 
     def post(self, text):
         raise NotImplementedError()
 
 
 class TwitterConfig(BaseModel):
-    consumer_key: str
-    consumer_secret: str
-    access_token_key: str
-    access_token_secret: str
+    bearer_token: str
     max_len: int = None
     lang: str = None
     interval: int = None
