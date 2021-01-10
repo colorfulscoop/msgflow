@@ -4,8 +4,10 @@ import requests
 import logging
 import json
 import datetime
+from typing import Any
+from msgflow.logging import print_json_log
 
-logging = logging.getLogger(__file__)
+logger = logging.getLogger(__file__)
 
 
 class TwitterMessage:
@@ -19,7 +21,11 @@ class TwitterMessage:
 
     @property
     def dialog_id(self) -> str:
-        return self._status.user.screen_name
+        return self._status["conversation_id"]
+
+    @property
+    def source(self) -> Any:
+        return self._status
 
     def respond(self, text):
         raise NotImplementedError()
@@ -33,6 +39,9 @@ class _TwitterApi:
         try:
             res = requests.get(
                 url="https://api.twitter.com/2/tweets/sample/stream",
+                params={
+                    "tweet.fields": "lang,conversation_id",
+                },
                 headers={
                     "Authorization": f"Bearer {self._bearer_token}"
                 },
@@ -45,9 +54,13 @@ class _TwitterApi:
             for item in res.iter_lines(decode_unicode=True):
                 # Output looks like
                 #  {"data": {"id": "...", "text": "..."}}
-                yield(json.loads(item)["data"])
+                try:
+                    yield(json.loads(item)["data"])
+                except json.decoder.JSONDecodeError:
+                    # line sometimes b'', which raises error
+                    print_json_log(logger, "info", f"{item} cannot be decoded as dict")
         except requests.exceptions.ChunkedEncodingError:
-            logging.info("Connection to Twitter was broken." "Reconnect again")
+            print_json_log(logger, "info", "Connection to Twitter was broken." "Reconnect again")
 
 
 class _SleepCondition:
@@ -63,7 +76,7 @@ class _SleepCondition:
         self._now = datetime.datetime.now()
 
     def need_sleep(self, interval):
-        return self._now - self._start_at <= interval
+        return self._now - self._start_at <= datetime.timedelta(seconds=interval)
 
 
 class TwitterSampleStreamService:
