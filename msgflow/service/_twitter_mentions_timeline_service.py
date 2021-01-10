@@ -12,8 +12,7 @@ class _TwitterApi:
         self._bearer_token = bearer_token
 
     def post_update(self, text, in_reply_to_status_id):
-        """This method will be implemented in the future once Twitter implements PostUpdate API in v2.
-        """
+        """This method will be implemented in the future once Twitter implements PostUpdate API in v2."""
 
     def get_mentions(self, user_id, since_id):
         """
@@ -28,9 +27,7 @@ class _TwitterApi:
             params={
                 "since_id": since_id,
             },
-            headers={
-                "Authorization": f"Bearer {self._bearer_token}"
-            }
+            headers={"Authorization": f"Bearer {self._bearer_token}"},
         )
         return res.json()["data"]
 

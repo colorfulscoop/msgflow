@@ -42,10 +42,8 @@ class _TwitterApi:
                 params={
                     "tweet.fields": "lang,conversation_id",
                 },
-                headers={
-                    "Authorization": f"Bearer {self._bearer_token}"
-                },
-                stream=True
+                headers={"Authorization": f"Bearer {self._bearer_token}"},
+                stream=True,
             )
 
             # Use iter_lines and decode_unicode to iterate streaming output
@@ -55,12 +53,14 @@ class _TwitterApi:
                 # Output looks like
                 #  {"data": {"id": "...", "text": "..."}}
                 try:
-                    yield(json.loads(item)["data"])
+                    yield (json.loads(item)["data"])
                 except json.decoder.JSONDecodeError:
                     # line sometimes b'', which raises error
                     print_json_log(logger, "info", f"{item} cannot be decoded as dict")
         except requests.exceptions.ChunkedEncodingError:
-            print_json_log(logger, "info", "Connection to Twitter was broken." "Reconnect again")
+            print_json_log(
+                logger, "info", "Connection to Twitter was broken." "Reconnect again"
+            )
 
 
 class _SleepCondition:
@@ -120,10 +120,7 @@ class TwitterSampleStreamService:
                 and status["lang"] == self._config.lang
                 and
                 # Check max_len
-                (
-                    self._config.max_len
-                    and len(text) <= self._config.max_len
-                )
+                (self._config.max_len and len(text) <= self._config.max_len)
             )
             if cond:
                 bot.handle(TwitterMessage(status=status), background=True)
