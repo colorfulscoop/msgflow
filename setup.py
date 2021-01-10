@@ -5,16 +5,16 @@ setuptools.setup(
     name="msgflow",
     packages=setuptools.find_packages(),
     install_requires=[
-        "fire~=0.3.1",
+        "fire>=0.3.1,<0.4",
         "envyaml==0.2060",
-        "pydantic~=1.0",
+        "pydantic>=1.0,<2",
         "requests>=2,<3"
     ],
     extras_require={
-        "test": ["pytest~=5.0", "black==20.8b1"],
-        "webapi": ["fastapi~=0.63.0", "uvicorn~=0.13.0"],
-        "slack": ["slackclient==1.2.1"],
-        "cron": ["croniter==0.3.37"]
+        "test": ["pytest>=5", "black==20.8b1"],
+        "webapi": ["fastapi>=0.63<0.64", "uvicorn>=0.13,<0.14"],
+        "slack": ["slackclient>=1.2.1,<1.3"],
+        "cron": ["croniter>=0.3.37,<0.4"]
     },
     version="0.5.0",
     author="Noriyuki Abe",
