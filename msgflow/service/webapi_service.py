@@ -1,7 +1,9 @@
 from pydantic import BaseModel
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import pkg_resources
+from typing import Any
 
 
 def build_api(handler):
@@ -20,6 +22,14 @@ def build_api(handler):
         version=get_version(),
     )
     app.add_api_route("/handle", handler.handle, methods=["POST"])
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origin_regex=r"http://localhost:.*",
+        allow_methods=["POST"],
+        # allow_headers=["*"],
+    )
+
     return app
 
 
@@ -61,6 +71,10 @@ class WebapiMessage:
 
     def respond(self, text):
         self._msgs.append(text)
+
+    @property
+    def source(self) -> Any:
+        raise NotImplementedError()
 
     @property
     def msgs(self):

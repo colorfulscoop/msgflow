@@ -1,5 +1,6 @@
 import sys
 from pydantic import BaseModel
+from typing import Any
 
 
 class CliMessage:
@@ -21,6 +22,10 @@ class CliMessage:
     def respond(self, text):
         fmt = f"bot> {text}"
         print(fmt, file=self._out_fd)
+
+    @property
+    def source(self) -> Any:
+        raise NotImplementedError()
 
 
 class CliConfig(BaseModel):
