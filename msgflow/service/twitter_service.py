@@ -35,10 +35,10 @@ class TwitterSampleStreamService:
     def from_config(cls, config: dict[str, object]):
         cfg = TwitterConfig(**config)
         api = twitter.Api(
-            consumer_key=config.consumer_key,
-            consumer_secret=config.consumer_secret,
-            access_token_key=config.access_token_key,
-            access_token_secret=config.access_token_secret,
+            consumer_key=cfg.consumer_key,
+            consumer_secret=cfg.consumer_secret,
+            access_token_key=cfg.access_token_key,
+            access_token_secret=cfg.access_token_secret,
         )
         return cls(config=cfg, api=api)
 
