@@ -6,13 +6,13 @@ from msgflow.bot import Bot
 class MockTwitterApi:
     def get_sample_stream(self):
         tweets = [
-            {'id': '0', 'text': 'test0', 'lang': 'ja'},
-            {'id': '1', 'text': 'test1', 'lang': 'ja'},
-            {'id': '2', 'text': 'test2', 'lang': 'ja'},
-            {'id': '3', 'text': 'test3_long_sentence', 'lang': 'ja'},
-            {'id': '4', 'text': 'test4_black_words', 'lang': 'ja'},
-            {'id': '4', 'text': 'test4_diff_lang', 'lang': 'en'},
-            {'id': '5', 'text': 'test5', 'lang': 'ja'},
+            {"id": "0", "text": "test0", "lang": "ja"},
+            {"id": "1", "text": "test1", "lang": "ja"},
+            {"id": "2", "text": "test2", "lang": "ja"},
+            {"id": "3", "text": "test3_long_sentence", "lang": "ja"},
+            {"id": "4", "text": "test4_black_words", "lang": "ja"},
+            {"id": "4", "text": "test4_diff_lang", "lang": "en"},
+            {"id": "5", "text": "test5", "lang": "ja"},
         ]
         for item in tweets:
             yield item
@@ -42,7 +42,9 @@ class MockSleepCond:
 
 def test_TwitterSampleStreamService_flow():
     api = MockTwitterApi()
-    config = TwitterConfig(bearer_token="", max_len=5, lang="ja", black_words=["4"], interval=1)
+    config = TwitterConfig(
+        bearer_token="", max_len=5, lang="ja", black_words=["4"], interval=1
+    )
     sleep_cond = MockSleepCond()
 
     svc = TwitterSampleStreamService(config=config, api=api, sleep_cond=sleep_cond)
