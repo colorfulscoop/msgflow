@@ -13,3 +13,7 @@ class DialogMemory:
 
     def get(self, dialog_id):
         return self._context.get(dialog_id, [])
+
+    def clear(self, dialog_id):
+        if dialog_id in self._context:
+            self._context[dialog_id] = []
