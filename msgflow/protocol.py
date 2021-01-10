@@ -1,4 +1,5 @@
 from typing import Protocol
+from typing import Any
 
 
 class Message(Protocol):
@@ -8,6 +9,16 @@ class Message(Protocol):
 
     @property
     def dialog_id(self) -> str:
+        raise NotImplementedError()
+
+    @property
+    def source(self) -> Any:
+        """`source` is to get the original information to generate this message.
+
+        Be careful to use `source` because `source` will give you the different
+        object structure per service. As as result, your app will only work on
+        a specific service
+        """
         raise NotImplementedError()
 
     def respond(self, text: str) -> None:

@@ -2,17 +2,19 @@ from pydantic import BaseModel
 import slackclient
 import time
 import logging
+from typing import Any
 
 logging.getLogger(__file__)
 
 
 class SlackMessage:
-    def __init__(self, text: str, user: str, api, config):
+    def __init__(self, text: str, user: str, api, config, source):
         """"""
         self._text = text
         self._user = user
         self._config = config
         self._api = api
+        self._source = source
 
     @property
     def text(self):
@@ -29,6 +31,10 @@ class SlackMessage:
             text=f"<@{self._user}> {text}",
             as_user=True,
         )
+
+    @property
+    def source(self) -> Any:
+        return self._source
 
 
 class SlackService:
@@ -71,13 +77,14 @@ class SlackService:
 
                     text = text.replace(f"<@{bot_user}>", "")
 
-                    msg = SlackMessage(
+                    message = SlackMessage(
                         text=text,
                         user=user,
                         api=self._api,
                         config=self._config,
+                        source=msg,
                     )
-                    bot.handle(msg, background=True)
+                    bot.handle(message, background=True)
 
                 time.sleep(1)
             except slackclient.server.SlackConnectionError:

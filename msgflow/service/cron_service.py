@@ -2,6 +2,7 @@ import datetime
 from pydantic import BaseModel
 import time
 import croniter
+from typing import Any
 
 
 class CronMessage:
@@ -19,6 +20,10 @@ class CronMessage:
         return self._text
 
     def respond(self, text):
+        raise NotImplementedError()
+
+    @property
+    def source(self) -> Any:
         raise NotImplementedError()
 
 
