@@ -73,10 +73,10 @@ Bye!
 
 | Name | Description | Flow message | Post | Respond to message | Where to handle message |
 | --- | --- | --- | --- | --- | --- |
-| msgflow.service.CliService | Service to get input from stdin and output to stdout | :white_check_mark: | :white_check_mark: | :white_check_mark: | Foreground |
-| msgflow.service.CronService | Service to post on a regular basis | :white_check_mark:  | | | Foreground |
-| msgflow.service.WebapiService | Service to serve web API | :white_check_mark: | | :white_check_mark:  | Foreground |
-| msgflow.service.SlackService | Service to work with Slack | :white_check_mark: | :white_check_mark: | :white_check_mark: | Background |
-| msgflow.service.TwitterSampleStreamService | This service gets tweets via [Twitter sampled stream v2](https://developer.twitter.com/en/docs/twitter-api/tweets/sampled-stream/api-reference/get-tweets-sample-stream) | :white_check_mark: | | | Background |
+| msgflow.service.CliService | Service to get input from stdin and output to stdout | o | o| o | Foreground |
+| msgflow.service.CronService | Service to post on a regular basis | o  | | | Foreground |
+| msgflow.service.WebapiService | Service to serve web API | o | | o  | Foreground |
+| msgflow.service.SlackService | Service to work with Slack | o | o | o | Background |
+| msgflow.service.TwitterSampleStreamService | This service gets tweets via [Twitter sampled stream v2](https://developer.twitter.com/en/docs/twitter-api/tweets/sampled-stream/api-reference/get-tweets-sample-stream) | o | | | Background |
 
-:white_check_mark: : Available
+o: available, blank: unavailable
