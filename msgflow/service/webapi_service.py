@@ -6,7 +6,7 @@ import pkg_resources
 from typing import Any
 
 
-def build_api(handler):
+def build_api(handler, endpoint):
     def get_version():
         pkg_name = "msgflow"
         try:
@@ -21,14 +21,7 @@ def build_api(handler):
         description="",
         version=get_version(),
     )
-    app.add_api_route("/handle", handler.handle, methods=["POST"])
-
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origin_regex=r"http://localhost:.*",
-        allow_methods=["POST"],
-        # allow_headers=["*"],
-    )
+    app.add_api_route(endpoint, handler.handle, methods=["POST"])
 
     return app
 
@@ -36,6 +29,7 @@ def build_api(handler):
 class Request(BaseModel):
     text: str
     dialog_id: str = 0
+    data: dict[str, Any] = None
 
 
 class Response(BaseModel):
@@ -48,16 +42,17 @@ class Handler:
         self._bot = bot
 
     def handle(self, req: Request):
-        msg = WebapiMessage(text=req.text, dialog_id=req.dialog_id)
+        msg = WebapiMessage(text=req.text, dialog_id=req.dialog_id, req=req)
         self._bot.handle(msg)
         return Response(texts=msg.msgs, request=req)
 
 
 class WebapiMessage:
-    def __init__(self, text: str, dialog_id: str):
+    def __init__(self, text: str, dialog_id: str, req):
         """"""
         self._text = text
         self._cid = dialog_id
+        self._req = req
         self._msgs = []
 
     @property
@@ -74,7 +69,7 @@ class WebapiMessage:
 
     @property
     def source(self) -> Any:
-        raise NotImplementedError()
+        return self._req
 
     @property
     def msgs(self):
@@ -97,7 +92,10 @@ class WebapiService:
 
     def flow(self, bot):
         handler = Handler(bot=bot)
-        app = build_api(handler)
+        app = build_api(
+            handler,
+            endpoint=self._config.endpoint,
+        )
         uvicorn.run(app=app, host=self._config.host, port=self._config.port)
 
     def post(self, text):
@@ -107,3 +105,4 @@ class WebapiService:
 class WebapiConfig(BaseModel):
     host: str
     port: int
+    endpoint: str = "/handle"
