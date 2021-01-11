@@ -36,6 +36,7 @@ def build_api(handler):
 class Request(BaseModel):
     text: str
     dialog_id: str = 0
+    data: dict[str, Any] = None
 
 
 class Response(BaseModel):
@@ -48,16 +49,17 @@ class Handler:
         self._bot = bot
 
     def handle(self, req: Request):
-        msg = WebapiMessage(text=req.text, dialog_id=req.dialog_id)
+        msg = WebapiMessage(text=req.text, dialog_id=req.dialog_id, req=req)
         self._bot.handle(msg)
         return Response(texts=msg.msgs, request=req)
 
 
 class WebapiMessage:
-    def __init__(self, text: str, dialog_id: str):
+    def __init__(self, text: str, dialog_id: str, req):
         """"""
         self._text = text
         self._cid = dialog_id
+        self._req = req
         self._msgs = []
 
     @property
@@ -74,7 +76,7 @@ class WebapiMessage:
 
     @property
     def source(self) -> Any:
-        raise NotImplementedError()
+        return self._req
 
     @property
     def msgs(self):
