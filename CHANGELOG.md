@@ -6,6 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.6.0] - 2021-01-11
+
+### Added
+
+- Implement clear method in DialogMemory https://github.com/colorfulscoop/msgflow/pull/19
+- Source property to Message object https://github.com/colorfulscoop/msgflow/pull/22
+- [WebApiService] data attribute in the request https://github.com/colorfulscoop/msgflow/pull/23
+- [WebApiService] endpoint option in config https://github.com/colorfulscoop/msgflow/pull/23
+
+### Changed
+
+- Update TwitterSampleStreamService to adopt Twitter API v2 https://github.com/colorfulscoop/msgflow/pull/21
+
+### Removed
+
+- Temporarily disable TwitterMentionsTimeline service because it does not work with Twitter API v2 https://github.com/colorfulscoop/msgflow/pull/21
+
 ## [v0.5.0] - 2021-01-09
 
 ### Added
