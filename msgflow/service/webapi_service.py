@@ -92,7 +92,10 @@ class WebapiService:
 
     def flow(self, bot):
         handler = Handler(bot=bot)
-        app = build_api(handler, endpoint=self._config.endpoint,)
+        app = build_api(
+            handler,
+            endpoint=self._config.endpoint,
+        )
         uvicorn.run(app=app, host=self._config.host, port=self._config.port)
 
     def post(self, text):
