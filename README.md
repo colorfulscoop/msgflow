@@ -31,7 +31,7 @@ $ cd work/
 msgFlow provides `init` command to generate the configuratio file and App script for you.
 
 ```sh
-$ python -m msgflow.main init
+$ python -m msgflow init
 $ ls
 app.py  config.yml
 ```
@@ -45,7 +45,7 @@ Let us run the msgFlow with the Config setting.
 You can utilize the `run` command with `--config_file` option which specify the default config file.
 
 ```sh
-$ python -m msgflow.main run --config_file config.yml
+$ python -m msgflow run --config_file config.yml
 INFO:/work/msgflow/main.py:{"level": "info", "message": {"service": "CliService", "post_service": "CliService"}, "time": "2020-12-26 11:10:43.886375"}
 ```
 
