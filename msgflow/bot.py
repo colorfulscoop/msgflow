@@ -13,11 +13,25 @@ class _ProducerClose:
     """"""
 
 
+class ClosableQueue(Queue):
+    _close_obj = _ProducerClose()
+
+    def close(self):
+        self.put(self._close_obj)
+
+    def __iter__(self):
+        while True:
+            item = self.get()
+            if item == self._close_obj:
+                return
+            yield item
+
+
 def _craete_producer_thread(bot):
     def run():
         # service will return None when it finishes providing messages.
         _ = bot._service.flow(bot)
-        bot._queue.put(_ProducerClose())
+        bot._queue.close()
         print_json_log(logger, "debug", "Finish producer thread")
 
     t = threading.Thread(target=run, daemon=True)
@@ -26,16 +40,11 @@ def _craete_producer_thread(bot):
 
 def _create_consumer_thread(bot):
     def run():
-        while True:
-            msg = bot._queue.get()
+        for msg in bot._queue:
             print_json_log(logger, "debug", f"{bot._queue.qsize()} items in Queue")
-            if type(msg) == _ProducerClose:
-                print_json_log(
-                    logger, "debug", "Got _ProducerClose message from producer thread"
-                )
-                print_json_log(logger, "debug", "Finish consumer thread")
-                return
             bot.handle(msg)
+        print_json_log(logger, "debug", "Finish consumer thread")
+        return
 
     t = threading.Thread(target=run, daemon=True)
     return t
@@ -47,7 +56,7 @@ class Bot:
         self._post_service = post_service
         self._app = app
 
-        self._queue = Queue()
+        self._queue = ClosableQueue()
 
     def start(self):
         producer_thread = _craete_producer_thread(self)
