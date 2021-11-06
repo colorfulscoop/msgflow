@@ -22,8 +22,8 @@ class MockApp:
     def __init__(self):
         self._recieved = []
 
-    def handle(self, bot, msg):
-        self._recieved.append(msg)
+    def handle(self, messenger):
+        self._recieved.append(messenger.message)
 
 
 class MockSleepCond:
