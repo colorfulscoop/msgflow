@@ -8,10 +8,11 @@ class MockApp:
     def __init__(self):
         self._i = 0
 
-    def handle(self, bot, msg):
+    def handle(self, messenger):
+        text = messenger.message.text
         if self._i % 2 == 0:
-            bot.post(msg.text)
-        msg.respond(msg.text)
+            messenger.post(text)
+        messenger.respond(text)
         self._i += 1
 
 
