@@ -76,7 +76,7 @@ class CronService:
                     print("Break", now)
                     break
                 msg = CronMessage(text=str(next_time))
-                bot.handle(msg=msg, background=True)
+                bot.handle(message=msg, background=True)
                 next_time = self._get_next(cron)
                 num_exec += 1
                 print("Num_exec", num_exec, self._config.num_max_exec)

@@ -5,8 +5,8 @@ import datetime
 
 
 class MockApp:
-    def handle(self, bot, msg):
-        bot.post(msg.text)
+    def handle(self, messenger):
+        messenger.post(messenger.message.text)
 
 
 class MockSleeper:
