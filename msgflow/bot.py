@@ -103,23 +103,27 @@ class Bot:
         self._post_service.post(text=text)
 
     # Following methods are used in services
-    def handle(self,
-               message: Optional[Message],
-               context: List[Message] = [],
-               background: bool = False):
+    def handle(
+        self,
+        message: Optional[Message],
+        context: List[Message] = [],
+        background: bool = False,
+    ):
 
         # Assert argument
         # Only one of msg or context should not be empty
-        assert (message and (not context)) or ((not message) and context), "Only one of msg or context should be not be empty"
+        assert (message and (not context)) or (
+            (not message) and context
+        ), "Only one of msg or context should be not be empty"
 
         if message:
             context = [message]
         else:
             message = context[0]
 
-        msger = Messenger(message=message,
-                          context=context,
-                          post_method=self._post_service.post)
+        msger = Messenger(
+            message=message, context=context, post_method=self._post_service.post
+        )
 
         if background:
             self._queue.put(msger)

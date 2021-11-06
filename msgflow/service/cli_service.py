@@ -44,9 +44,7 @@ class CliService:
 
     @classmethod
     def from_config(cls, config: Dict[str, object]):
-        return cls(config=CliConfig(**config),
-                   in_fd=sys.stdin,
-                   out_fd=sys.stdout)
+        return cls(config=CliConfig(**config), in_fd=sys.stdin, out_fd=sys.stdout)
 
     def _show_prompt(self, user_name, out_fd):
         print(f"{user_name}> ", end="", file=out_fd)
@@ -60,9 +58,9 @@ class CliService:
             if text == "/exit":
                 break
 
-            msg = CliMessage(text=text,
-                             user_name=self._config.user_name,
-                             out_fd=self._out_fd)
+            msg = CliMessage(
+                text=text, user_name=self._config.user_name, out_fd=self._out_fd
+            )
             bot.handle(message=msg)
             self._show_prompt(self._config.user_name, self._out_fd)
 
