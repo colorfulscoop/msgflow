@@ -29,9 +29,7 @@ class MockService:
 
     def flow(self, bot):
         for message, context in self._msgs:
-            bot.handle(message=message,
-                       context=context,
-                       background=self._background)
+            bot.handle(message=message, context=context, background=self._background)
 
     def post(self, text):
         raise NotImplementedError()
@@ -60,12 +58,16 @@ def test_start():
         bot = Bot(service=svc, post_service=svc, app=app)
         bot.start()
 
-        assert app.accepted_msg == [MockMessage(text="1"),
-                                    MockMessage(text="2"),
-                                    MockMessage(text="3")]
-        assert app.accepted_context == [[MockMessage(text="1")],
-                                        [MockMessage(text="2")],
-                                        [MockMessage(text="3")]]
+        assert app.accepted_msg == [
+            MockMessage(text="1"),
+            MockMessage(text="2"),
+            MockMessage(text="3"),
+        ]
+        assert app.accepted_context == [
+            [MockMessage(text="1")],
+            [MockMessage(text="2")],
+            [MockMessage(text="3")],
+        ]
 
 
 def test_start_with_context():
@@ -80,9 +82,11 @@ def test_start_with_context():
     bot = Bot(service=svc, post_service=svc, app=app)
     bot.start()
 
-    expected = [[MockMessage(text="1"), MockMessage(text="2")],
-                [MockMessage(text="2"), MockMessage(text="3")],
-                [MockMessage(text="3"), MockMessage(text="4")]]
+    expected = [
+        [MockMessage(text="1"), MockMessage(text="2")],
+        [MockMessage(text="2"), MockMessage(text="3")],
+        [MockMessage(text="3"), MockMessage(text="4")],
+    ]
     assert app.accepted_context == expected
 
 
