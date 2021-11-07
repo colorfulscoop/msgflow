@@ -105,7 +105,7 @@ class Bot:
     # Following methods are used in services
     def handle(
         self,
-        message: Optional[Message],
+        message: Optional[Message] = None,
         context: List[Message] = [],
         background: bool = False,
     ):
@@ -114,7 +114,7 @@ class Bot:
         # Only one of msg or context should not be empty
         assert (message and (not context)) or (
             (not message) and context
-        ), "Only one of msg or context should be not be empty"
+        ), "Only one of message or context should be not be empty"
 
         if message:
             context = [message]

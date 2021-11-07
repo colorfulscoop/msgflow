@@ -103,4 +103,4 @@ def test_handle_error_giving_both_message_and_context_empty():
     bot = Bot(service=None, post_service=None, app=None)
 
     with pytest.raises(AssertionError):
-        bot.handle(message=None, context=[], background=False)
+        bot.handle()
