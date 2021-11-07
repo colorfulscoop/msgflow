@@ -6,6 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+This release provides a new feature of handling conversation context in your App.
+This feature was mainly implemented in this PR.
+https://github.com/colorfulscoop/msgflow/pull/27
+If no PRs are not mentioned below, please consider the feature was implemented in this PR.
+
+### Added
+
+- Messenger object, which manages a context of conversation
+
+### Changed
+
+- Add __main__.py to make the package executable https://github.com/colorfulscoop/msgflow/pull/25
+
+### Removed
+
+- DialogMemory because This feature is available via context
+
 ## [v0.6.0] - 2021-01-11
 
 ### Added
