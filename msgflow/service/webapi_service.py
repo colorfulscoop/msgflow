@@ -1,9 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import pkg_resources
-from typing import Any
+from typing import Any, List, Dict
 
 
 def build_api(handler, endpoint):
@@ -27,13 +26,18 @@ def build_api(handler, endpoint):
 
 
 class Request(BaseModel):
-    text: str
-    dialog_id: str = 0
-    data: dict[str, Any] = None
+    context: List[str]
+    data: Dict[str, Any] = None
+
+    @validator("context")
+    def context_not_empty(cls, v):
+        if not v:
+            raise Exception("Context should have at least one value")
+        return v
 
 
 class Response(BaseModel):
-    texts: list[str]
+    texts: List[str]
     request: Request
 
 
@@ -42,38 +46,33 @@ class Handler:
         self._bot = bot
 
     def handle(self, req: Request):
-        msg = WebapiMessage(text=req.text, dialog_id=req.dialog_id, req=req)
-        self._bot.handle(msg)
-        return Response(texts=msg.msgs, request=req)
+        context = [WebapiMessage(text=text, req=req) for text in req.context]
+        self._bot.handle(context=context)
+        return Response(texts=context[0].responses, request=req)
 
 
 class WebapiMessage:
-    def __init__(self, text: str, dialog_id: str, req):
+    def __init__(self, text: str, req):
         """"""
         self._text = text
-        self._cid = dialog_id
         self._req = req
-        self._msgs = []
+        self._responses = []
 
     @property
     def text(self):
         return self._text
 
-    @property
-    def dialog_id(self) -> str:
-        # In CliService, a conversation is identified by the user's name
-        return self._cid
-
     def respond(self, text):
-        self._msgs.append(text)
+        self._responses.append(text)
 
     @property
     def source(self) -> Any:
         return self._req
 
     @property
-    def msgs(self):
-        return self._msgs
+    def responses(self) -> List[str]:
+        """This property is specific to WebapiMessage."""
+        return self._responses
 
 
 class WebapiService:
@@ -86,7 +85,7 @@ class WebapiService:
         self._config = config
 
     @classmethod
-    def from_config(cls, config: dict[str, object]):
+    def from_config(cls, config: Dict[str, object]):
         cfg = WebapiConfig(**config)
         return cls(config=cfg)
 
