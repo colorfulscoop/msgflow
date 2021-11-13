@@ -1,7 +1,7 @@
 # Service
 
 | Name | Description | Retrieve Messages | Respond to a Message | Post a Message |
-| --- | --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
 | msgflow.service.CliService | Get messages from from stdin and output to stdout | o | o | o |
 | msgflow.service.CronService | Get messages on a regular basis | o  | | |
 | msgflow.service.WebapiService | Get and respond a message as Web API  | o | o |  |
