@@ -2,7 +2,7 @@
 
 ## Config Definition
 
-```sh
+```py
 class SlackConfig(BaseModel):
     app_token: str
     bot_token: str
@@ -19,7 +19,7 @@ Once you set it, you will get messages mentioning to the `bot_user`.
 
 TODO: write how to get bot_user id
 
-```sh
+```py
 service:
   name: msgflow.service.SlackService
   config:
@@ -39,7 +39,7 @@ You need to set `channel` to post a message.
 
 Example of config:
 
-```sh
+```py
 service:
   name: msgflow.service.SlackService
   config:
