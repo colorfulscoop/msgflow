@@ -1,4 +1,4 @@
-# msgFlow
+# msgflow
 
 ![](https://github.com/colorfulscoop/msgflow/workflows/unittest/badge.svg)
 
