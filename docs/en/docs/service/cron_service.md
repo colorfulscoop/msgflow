@@ -2,6 +2,12 @@
 
 CronService sends messages on a regular basis.
 
+## Install
+
+```sh
+$ pip install msgflow[cron]
+```
+
 ## Config Definition
 
 ```py

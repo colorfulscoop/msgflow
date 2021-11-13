@@ -15,7 +15,7 @@ $ pip install msgflow
 msgFlow separas dependent libraries for each service. To make all the services available, install msgFlow with the following options.
 
 ```sh
-$ pip install msgflow[webapi,twitter,slack]
+$ pip install msgflow[webapi,slack,cron]
 ```
 
 ## Quick Start

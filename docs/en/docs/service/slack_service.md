@@ -8,6 +8,12 @@ SlackService enables you to
 * respond to a message in a same thread
 * post a message to a channel
 
+## Install
+
+```sh
+$ pip install msgflow[slack]
+```
+
 ## Config Definition
 
 ```py
