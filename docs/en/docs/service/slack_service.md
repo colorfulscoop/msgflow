@@ -1,5 +1,13 @@
 # SlackService
 
+SlackService connects to Slack via [Socket Mode](https://api.slack.com/apis/connections/socket).
+
+SlackService enables you to
+
+* retrive mentions
+* respond to a message in a same thread
+* post a message to a channel
+
 ## Config Definition
 
 ```py
@@ -31,7 +39,7 @@ service:
 ### Respond to a Message
 
 You can respond to a retrieved message.
-The message will be responded in a thread in which the retrieved message exists.
+The message will be responded in the same thread as the original message.
 
 ### Post a Message
 
