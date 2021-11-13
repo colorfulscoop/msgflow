@@ -52,12 +52,14 @@ class SlackService:
             text=re.sub(regex, "", message["text"]),
             user=message["user"],
             say=say,
-            source=message
+            source=message,
         )
 
     def flow(self, bot):
         if self._config.bot_user is None:
-            raise SlackConfigError("bot_user should be set when you retrieve messages from Slack")
+            raise SlackConfigError(
+                "bot_user should be set when you retrieve messages from Slack"
+            )
 
         def listen_event(message, say, client):
             # https://github.com/slackapi/python-slack-sdk/blob/b22ac3c1f049a5f1385632ccabd144309841dfd4/slack_sdk/web/client.py#L2403
