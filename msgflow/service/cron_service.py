@@ -5,6 +5,7 @@ import croniter
 from typing import Any, Optional, Dict
 
 import logging
+
 logger = logging.getLogger(__file__)
 
 
@@ -73,7 +74,9 @@ class CronService:
                 now = self._now_func()
                 if now < next_time:
                     break
-                logger.info(f'Cron will execute job: cron_format="{self._config.cron_format}", now="{datetime.datetime.isoformat(now)}"')
+                logger.info(
+                    f'Cron will execute job: cron_format="{self._config.cron_format}", now="{datetime.datetime.isoformat(now)}"'
+                )
                 msg = CronMessage(text=datetime.datetime.isoformat(next_time))
                 bot.handle(message=msg, background=True)
                 next_time = self._get_next(cron)
