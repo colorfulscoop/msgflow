@@ -50,15 +50,22 @@ msgFlow provides simple and flexible customization architecture to develop your 
 To implement your custom application, you only need to write you application in a specific-formatted class.
 
 ```py
-class MyApp:
-    def __init__(self, service, config):
-        """"""
-        self._service = service
+from typing import Dict
+from msgflow import Messenger
 
-    def handle(self, message):
-        res = f'{message.text}'
-        message.respond(res)
-        self._service.post(f'Log: "{message.text}"')
+
+class MyApp:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def from_config(cls, config: Dict[str, object]):
+        return cls()
+
+    def handle(self, messenger: Messenger):
+        log_msg = f'App got message: Message(text="{messenger.message.text}", context="{[m.text for m in messenger.context]}")'
+        messenger.post(log_msg)
+        messenger.respond(f'Thank you for your message "{messenger.message.text}"!')
 ```
 
 Then, the class can be specified in your configuration file.
@@ -67,13 +74,3 @@ Then, the class can be specified in your configuration file.
 app:
   name: app.MyApp
 ```
-
-## Dive into msgFlow
-
-Let's [get started](getting_started.md) to work with msgFlow!
-
-All the documents are listed here;
-
-- [Getting Started](getting_started.md)
-- [Development - how to build document, test code](development.md)
-- [Changelog](CHANGELOG.md)
