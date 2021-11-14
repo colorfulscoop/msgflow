@@ -5,8 +5,8 @@ import datetime
 
 
 class MockApp:
-    def handle(self, bot, msg):
-        bot.post(msg.text)
+    def handle(self, messenger):
+        messenger.post(messenger.message.text)
 
 
 class MockSleeper:
@@ -59,7 +59,7 @@ def test_CliService():
     # Assert output
     assert sleeper.record == [1, 1, 1]
     assert post_svc.record == [
-        "2021-01-01 00:00:02",
-        "2021-01-01 00:00:04",
-        "2021-01-01 00:00:06",
+        "2021-01-01T00:00:02",
+        "2021-01-01T00:00:04",
+        "2021-01-01T00:00:06",
     ]

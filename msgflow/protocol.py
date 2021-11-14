@@ -1,14 +1,10 @@
 from typing import Protocol
-from typing import Any
+from typing import Any, Dict
 
 
 class Message(Protocol):
     @property
     def text(self) -> str:
-        raise NotImplementedError()
-
-    @property
-    def dialog_id(self) -> str:
         raise NotImplementedError()
 
     @property
@@ -27,7 +23,7 @@ class Message(Protocol):
 
 class App(Protocol):
     @classmethod
-    def from_config(cls, config: dict[str, object]):
+    def from_config(cls, config: Dict[str, object]):
         """
         To initialize App with config defined in YAML configu file,
         the following initializer.
@@ -42,7 +38,7 @@ class Service(Protocol):
     """Protoocl for Service."""
 
     @classmethod
-    def from_config(cls, config: dict[str, object]):
+    def from_config(cls, config: Dict[str, object]):
         raise NotImplementedError()
 
     def flow(self, bot) -> None:

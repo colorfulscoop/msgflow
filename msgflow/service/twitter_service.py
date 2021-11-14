@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Dict
 import requests
 import logging
 import json
@@ -18,10 +18,6 @@ class TwitterMessage:
     @property
     def text(self):
         return self._status["text"]
-
-    @property
-    def dialog_id(self) -> str:
-        return self._status["conversation_id"]
 
     @property
     def source(self) -> Any:
@@ -86,7 +82,7 @@ class TwitterSampleStreamService:
         self._sleep_cond = sleep_cond
 
     @classmethod
-    def from_config(cls, config: dict[str, object]):
+    def from_config(cls, config: Dict[str, object]):
         cfg = TwitterConfig(**config)
         api = _TwitterApi(bearer_token=cfg.bearer_token)
         return cls(config=cfg, api=api, sleep_cond=_SleepCondition())
@@ -123,7 +119,7 @@ class TwitterSampleStreamService:
                 (self._config.max_len and len(text) <= self._config.max_len)
             )
             if cond:
-                bot.handle(TwitterMessage(status=status), background=True)
+                bot.handle(message=TwitterMessage(status=status), background=True)
                 self._sleep_cond.reset()
 
     def post(self, text):

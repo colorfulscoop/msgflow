@@ -2,7 +2,11 @@ import datetime
 from pydantic import BaseModel
 import time
 import croniter
-from typing import Any
+from typing import Any, Optional, Dict
+
+import logging
+
+logger = logging.getLogger(__file__)
 
 
 class CronMessage:
@@ -12,11 +16,6 @@ class CronMessage:
 
     @property
     def text(self):
-        return self._text
-
-    @property
-    def dialog_id(self) -> str:
-        # In CliService, a conversation is identified by the user's name
         return self._text
 
     def respond(self, text):
@@ -30,7 +29,7 @@ class CronMessage:
 class CronConfig(BaseModel):
     cron_format: str
     sleep_interval: int = 1
-    num_max_exec: int = 0
+    num_max_exec: Optional[int] = None
 
 
 class CronService:
@@ -50,7 +49,7 @@ class CronService:
         self._now_func = now_func
 
     @classmethod
-    def from_config(cls, config: dict[str, object]):
+    def from_config(cls, config: Dict[str, object]):
         return cls(
             config=CronConfig(**config),
             sleep_func=time.sleep,
@@ -69,20 +68,22 @@ class CronService:
         finished = False
 
         while True:
+            if self._config.num_max_exec is not None and self._config.num_max_exec <= 0:
+                break
             while True:
                 now = self._now_func()
-                print(now)
                 if now < next_time:
-                    print("Break", now)
                     break
-                msg = CronMessage(text=str(next_time))
-                bot.handle(msg=msg, background=True)
+                logger.info(
+                    f'Cron will execute job: cron_format="{self._config.cron_format}", now="{datetime.datetime.isoformat(now)}"'
+                )
+                msg = CronMessage(text=datetime.datetime.isoformat(next_time))
+                bot.handle(message=msg, background=True)
                 next_time = self._get_next(cron)
                 num_exec += 1
-                print("Num_exec", num_exec, self._config.num_max_exec)
 
                 if (
-                    self._config.num_max_exec > 0
+                    self._config.num_max_exec is not None
                     and num_exec >= self._config.num_max_exec
                 ):
                     finished = True
@@ -90,7 +91,6 @@ class CronService:
             if finished:
                 break
             self._sleep_func(self._config.sleep_interval)
-            print("Sleep")
 
     def post(self, text):
         raise NotImplementedError()

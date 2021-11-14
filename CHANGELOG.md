@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Introduce Messenger to handle a context in conversations https://github.com/colorfulscoop/msgflow/pull/27
+
+### Removed
+
+- DialogMemory because This feature is available via context
+
 ## [v0.6.0] - 2021-01-11
 
 ### Added

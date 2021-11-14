@@ -1,4 +1,4 @@
-# msgFlow
+# msgflow
 
 ![](https://github.com/colorfulscoop/msgflow/workflows/unittest/badge.svg)
 
@@ -15,7 +15,7 @@ $ pip install msgflow
 msgFlow separas dependent libraries for each service. To make all the services available, install msgFlow with the following options.
 
 ```sh
-$ pip install msgflow[webapi,twitter,slack]
+$ pip install msgflow[webapi,slack,cron]
 ```
 
 ## Quick Start
@@ -71,12 +71,5 @@ Bye!
 
 ## Service List
 
-| Name | Description | Flow message | Post | Respond to message | Where to handle message |
-| --- | --- | --- | --- | --- | --- |
-| msgflow.service.CliService | Service to get input from stdin and output to stdout | o | o| o | Foreground |
-| msgflow.service.CronService | Service to post on a regular basis | o  | | | Foreground |
-| msgflow.service.WebapiService | Service to serve web API | o | | o  | Foreground |
-| msgflow.service.SlackService | Service to work with Slack | o | o | o | Background |
-| msgflow.service.TwitterSampleStreamService | This service gets tweets via [Twitter sampled stream v2](https://developer.twitter.com/en/docs/twitter-api/tweets/sampled-stream/api-reference/get-tweets-sample-stream) | o | | | Background |
+Check available services in [docs](docs/en/docs/service.md).
 
-o: available, blank: unavailable

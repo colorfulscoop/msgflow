@@ -1,110 +1,91 @@
 from pydantic import BaseModel
-import slackclient
 import time
 import logging
-from typing import Any
+from typing import Any, Optional
+import re
+from typing import Dict, List
+from slack_bolt import App
+from slack_bolt.adapter.socket_mode import SocketModeHandler
 
 logging.getLogger(__file__)
 
 
+class SlackConfigError(Exception):
+    """SlackConfigError raises when a config file has wrong settings"""
+
+
 class SlackMessage:
-    def __init__(self, text: str, user: str, api, config, source):
+    def __init__(self, text: str, user: str, say, source):
         """"""
         self._text = text
         self._user = user
-        self._config = config
-        self._api = api
+        self._say = say
         self._source = source
 
     @property
     def text(self):
         return self._text
 
-    @property
-    def dialog_id(self) -> str:
-        return self._user
-
     def respond(self, text):
-        self._api.api_call(
-            "chat.postMessage",
-            channel=self._config.channel,
+        self._say(
             text=f"<@{self._user}> {text}",
-            as_user=True,
+            # Reply to thread
+            thread_ts=self._source.get("thread_ts", self._source["ts"]),
         )
-
-    @property
-    def source(self) -> Any:
-        return self._source
 
 
 class SlackService:
-    def __init__(self, config, api):
+    def __init__(self, config, app):
         config = config
         self._config = config
-        self._api = api
+        self._app = app
 
     @classmethod
-    def from_config(cls, config: dict[str, object]):
+    def from_config(cls, config: Dict[str, object]):
         cfg = SlackConfig(**config)
-        api = slackclient.SlackClient(
-            token=cfg.slack_api_token,
+        app = App(token=cfg.bot_token)
+        return cls(config=cfg, app=app)
+
+    def _build_message(self, message, say):
+        regex = r"\s*<@[a-zA-Z0-9]+>\s*"
+        return SlackMessage(
+            text=re.sub(regex, "", message["text"]),
+            user=message["user"],
+            say=say,
+            source=message,
         )
-        return cls(config=cfg, api=api)
 
     def flow(self, bot):
-        connection_established = False
+        if self._config.bot_user is None:
+            raise SlackConfigError(
+                "bot_user should be set when you retrieve messages from Slack"
+            )
 
-        while True:
-            try:
-                if not connection_established:
-                    logging.info("Connecting to Slack RTM")
-                    con = self._api.rtm_connect()
-                    if not con:
-                        raise Exception()
-                    logging.info("Connection established")
-                    connection_established = True
+        def listen_event(message, say, client):
+            # https://github.com/slackapi/python-slack-sdk/blob/b22ac3c1f049a5f1385632ccabd144309841dfd4/slack_sdk/web/client.py#L2403
+            res = client.conversations_replies(
+                channel=message["channel"],
+                ts=message.get("thread_ts", message["ts"]),
+            )
+            context = [self._build_message(message=m, say=say) for m in res["messages"]]
+            bot.handle(context=context, background=True)
 
-                msgs = self._api.rtm_read()
-                for msg in msgs:
-                    if msg["type"] != "message":
-                        continue
-                    text = msg["text"]
-                    user = msg["user"]
-                    bot_user = self._config.bot_id
+        regex = f"<@{self._config.bot_user}>"
+        self._app.message(regex)(listen_event)
 
-                    if bot_user not in text:
-                        continue
-
-                    text = text.replace(f"<@{bot_user}>", "")
-
-                    message = SlackMessage(
-                        text=text,
-                        user=user,
-                        api=self._api,
-                        config=self._config,
-                        source=msg,
-                    )
-                    bot.handle(message, background=True)
-
-                time.sleep(1)
-            except slackclient.server.SlackConnectionError:
-                logging.info(
-                    "Connection to Slack RTM is brokes."
-                    "Reconnect again after 10 seconds"
-                )
-                connection_established = False
-                time.sleep(10)
+        SocketModeHandler(self._app, self._config.app_token).start()
 
     def post(self, text):
-        self._api.api_call(
-            "chat.postMessage",
+        if self._config.channel is None:
+            raise SlackConfigError("channel should be set when you use post to Slack")
+        self._app.client.chat_postMessage(
             channel=self._config.channel,
             text=text,
-            as_user=True,
         )
 
 
 class SlackConfig(BaseModel):
-    slack_api_token: str
-    channel: str
-    bot_id: str
+    app_token: str
+    bot_token: str
+    bot_user: Optional[str] = None
+    channel: Optional[str] = None
