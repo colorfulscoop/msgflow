@@ -9,6 +9,8 @@ setuptools.setup(
         "envyaml==0.2060",
         "pydantic>=1.0,<2",
         "requests>=2,<3",
+        "aiohttp",
+        "aioconsole",
     ],
     extras_require={
         "test": ["pytest>=5", "black==20.8b1"],
