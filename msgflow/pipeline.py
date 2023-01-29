@@ -2,7 +2,7 @@ import asyncio
 import sys
 
 
-class PipelineMixin:
+class PipelineChannelMixin:
     @property
     def name(self) -> str:
         return self._pipeline_provider_name
@@ -35,15 +35,15 @@ class Pipeline:
 
         services = []
 
-        if isinstance(handler.service, dict):
+        if isinstance(handler.input_channel, dict):
             # Sort may be needed
-            for svc_name, svc in handler.service.items():
+            for svc_name, svc in handler.input_channel.items():
                 svc.set_name(svc_name)
                 services.append(svc)
-        elif isinstance(handler.service, list):
-            services = handler.service
+        elif isinstance(handler.input_channel, list):
+            services = handler.input_channel
         else:
-            services = [handler.service]
+            services = [handler.input_channel]
 
         self._services = services
 
@@ -61,7 +61,7 @@ class Pipeline:
 
                 if not handler_enabled:
                     continue
-                if (handler_service_name is not None) and (msg.service.name != handler_service_name):
+                if (handler_service_name is not None) and (msg.channel.name != handler_service_name):
                     continue
                 if (handler_filter is not None) and (not handler_filter(msg)):
                     continue

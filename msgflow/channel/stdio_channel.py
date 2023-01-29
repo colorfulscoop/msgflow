@@ -1,10 +1,10 @@
 import asyncio
-from msgflow import Channel, Message
+from msgflow import Channel, Message, PipelineChannelMixin
 import sys
 import aioconsole
 
 
-class StdioChannel(Channel):
+class StdioChannel(Channel, PipelineChannelMixin):
     def __init__(self, user_name: str, in_fd=sys.stdin, out_fd=sys.stdout):
         self._user_name = user_name
         self._in_fd = in_fd
@@ -18,9 +18,9 @@ class StdioChannel(Channel):
                 print("Bye!", file=self._out_fd)
                 break
 
-            msg = StdioChannel(service=self, req=text)
+            msg = StdioMessage(channel=self, req=text)
             await queue.put(msg)
-            await msg._future
+            await msg.wait_response()
 
     async def post(self, obj: str) -> None:
         print(obj, file=self._out_fd)
@@ -53,5 +53,5 @@ class StdioMessage(Message):
     def res(self):
         return self._res
 
-    def is_responded(self):
-        return self._event
+    async def wait_response(self):
+        await self._event.wait()

@@ -1,10 +1,10 @@
 import asyncio
-from msgflow import Channel, Message
+from msgflow import Channel, Message, PipelineChannelMixin
 from typing import Any
 from aiohttp import web
 
 
-class WebapiChannel:
+class WebapiChannel(Channel, PipelineChannelMixin):
     def __init__(self, host, port, routes):
         self._host = host
         self._port = port
@@ -15,7 +15,7 @@ class WebapiChannel:
             msg = Message(req=request, res=None, service=self)
             await queue.put(msg)
             print(f"Queue updated: size={queue.qsize()}, object={queue}")
-            await msg.is_responded()
+            await msg.wait_response()
             return msg.res
 
         # https://docs.aiohttp.org/en/stable/web_advanced.html#application-runners
@@ -39,7 +39,7 @@ class WebapiChannel:
         raise NotImplementedError()
 
 
-class WebapiMessage:
+class WebapiMessage(Message):
     def __init__(self, channel, req, res):
         """"""
         self._req = req
@@ -63,5 +63,5 @@ class WebapiMessage:
     def res(self):
         return self._res
 
-    def is_responded(self):
-        return self._event
+    async def wait_response(self):
+        return self._event.wait()

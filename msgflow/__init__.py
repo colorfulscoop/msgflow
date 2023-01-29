@@ -1,3 +1,4 @@
 from .bot import Messenger
 
-from .pipeline import Pipeline, handler
+from .channel.channel import Channel, Message
+from .pipeline import Pipeline, PipelineChannelMixin, handler
