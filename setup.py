@@ -11,6 +11,7 @@ setuptools.setup(
         "requests>=2,<3",
         "aiohttp",
         "aioconsole",
+        "regex_spm",
     ],
     extras_require={
         "test": ["pytest>=5", "black==20.8b1"],
