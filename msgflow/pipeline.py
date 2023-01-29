@@ -65,9 +65,13 @@ class Pipeline:
                 handler_arg_names = inspect.getfullargspec(handler).args[1:]  # use [1:] to remove first "self"
 
                 # Set up argument to pass to handler
-                args = {"msg": msg}
-                if "match" in handler_arg_names:
-                    args["match"] = match
+                possible_arg_map = {"msg": msg, "match": match}
+                args = dict()
+                for arg in handler_arg_names:
+                    if arg in possible_arg_map:
+                        args[arg] = possible_arg_map[arg]
+                    else:
+                        raise Exception(f"{arg} should be one of {set(possible_arg_map.keys())}")
                 await handler(**args)
 
                 # If one of handlers matches, other handlers will be ignored
