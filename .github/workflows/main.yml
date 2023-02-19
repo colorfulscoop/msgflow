@@ -4,7 +4,7 @@ jobs:
   test-small:
     runs-on: ubuntu-18.04
     container:
-      image: python:3.11.2-slim-buster
+      image: python:3.11.2-buster
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
